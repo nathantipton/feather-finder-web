@@ -1,12 +1,6 @@
 <script lang="ts">
-	import { dev } from '$app/environment';
-	import { goto } from '$app/navigation';
 	import NotableSpeciesMap from '$lib/components/maps/NotableSpeciesMap.svelte';
 
-	// if production, redirect to /coming-soon
-	if (!dev) {
-		goto('/coming-soon');
-	}
 </script>
 
 <div class="flex flex-col relative">
