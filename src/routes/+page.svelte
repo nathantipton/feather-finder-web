@@ -9,17 +9,29 @@
 	}
 </script>
 
-<div>
+<div class="flex flex-col relative">
 	<div>
 		<NotableSpeciesMap />
 	</div>
-	<div>
-		<form action="">
-			<div class="form-control">
-				<input type="text" name="search" id="search" />
-				<button type="submit">Search</button>
+	<div class="md:-mt-8 bg-zinc-900 z-40 container mx-auto md:rounded-xl max-w-2xl mb-4 p-4">
+		<form class=" w-full">
+			<div class="form-control flex flex-row join">
+				<input
+					class="input flex-1 join-item"
+					type="text"
+					name="search"
+					id="search"
+					placeholder="Search by species name..."
+				/>
+				<button class="btn join-item" type="submit">Search</button>
 			</div>
 		</form>
 	</div>
-	<div>menu options, recently searched, browse by name</div>
+	<div class="px-4">menu options, recently searched, browse by name</div>
 </div>
+
+<style>
+	:global(.mapboxgl-ctrl-bottom-left) {
+		bottom: 30px;
+	}
+</style>

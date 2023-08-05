@@ -5,16 +5,21 @@
 
 	onMount(async () => {
 		await getUserLocation();
+		const map = new mapboxgl.Map({
+			container: 'notable-species-map',
+			style: 'mapbox://styles/mapbox/dark-v11',
+			center: [0, 0],
+			zoom: 9,
+			attributionControl: false,
+			logoPosition: 'top-left'
+		});
+
+		const currentLocation = new mapboxgl.Marker().setLngLat([0, 0]).addTo(map);
+		map.addControl(new mapboxgl.AttributionControl(), 'top-right');
 
 		userCoordinates.subscribe((coords) => {
-			const map = new mapboxgl.Map({
-				container: 'notable-species-map',
-				style: 'mapbox://styles/mapbox/light-v11',
-				center: [coords.lng, coords.lat],
-				zoom: 9
-			});
-
-			const currentLocation = new mapboxgl.Marker().setLngLat([coords.lng, coords.lat]).addTo(map);
+			map.setCenter([coords.lng, coords.lat]);
+			currentLocation.setLngLat([coords.lng, coords.lat]);
 		});
 	});
 </script>
