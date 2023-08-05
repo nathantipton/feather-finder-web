@@ -2,7 +2,14 @@
 export default {
   content: ['./src/**/*.{html,js,svelte,ts}'],
   theme: {
-    extend: {},
+    extend: {
+      height: {
+        'screen-safe': '100svh',
+      },
+      minHeight: {
+        'screen-safe': '100svh',
+      }
+    },
   },
   plugins: [],
 }

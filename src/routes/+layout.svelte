@@ -2,4 +2,24 @@
 	import '../styles/app.postcss';
 </script>
 
-<slot />
+<!-- Main -->
+<div class="min-h-screen-safe flex flex-col justify-start items-stretch">
+	<!-- Header -->
+	<header class="flex flex-row p-4">
+		<div class="text-2xl">Feather Finder</div>
+	</header>
+
+	<main class="flex-1">
+		<slot />
+	</main>
+
+	<!-- Footer -->
+	<footer>
+		<div class="flex flex-col justify-center items-center">
+			<!-- Copyright text -->
+			<div class="text-sm">
+				This is a portfolio project. Nathan Tipton, {new Date().getFullYear()}
+			</div>
+		</div>
+	</footer>
+</div>
