@@ -6,7 +6,6 @@
 	export let data;
 
 	const { speciesDetails } = data;
-	console.log(speciesDetails);
 </script>
 
 <div class="flex flex-col w-full items-stretch justify-start">
