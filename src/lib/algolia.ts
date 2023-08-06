@@ -6,7 +6,6 @@ export class AlgoliaSearchClient implements App.SearchClient {
     #client: SearchClient;
     #index: SearchIndex;
 
-
     constructor(index: string = 'species') {
         this.#client = algoliasearch(
             PUBLIC_ALGOLIA_APP_ID,
@@ -16,8 +15,11 @@ export class AlgoliaSearchClient implements App.SearchClient {
         this.#index = this.#client.initIndex(index);
     }
 
-    query(query: string): Promise<any> {
-        return this.#index.search(query);
+    query(query: string, onlyUS: boolean = true): Promise<any> {
+        return this.#index.search(query,
+            {
+                filters: onlyUS ? 'regions:US' : 'undefined'
+            }
+        );
     }
-
 }
