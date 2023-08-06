@@ -51,7 +51,7 @@
 
 			const marker = new mapboxgl.Marker({
 				color: getDaysBackColor(s.obsDt),
-				scale: 0.5
+				scale: 0.75
 			})
 				.setLngLat([s.lng, s.lat])
 				.setPopup(popup)
