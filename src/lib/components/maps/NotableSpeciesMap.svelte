@@ -54,8 +54,7 @@
 			);
 
 			const marker = new mapboxgl.Marker({
-				color: getDaysBackColor(s.obsDt),
-				scale: 0.75
+				color: getDaysBackColor(s.obsDt)
 			})
 				.setLngLat([s.lng, s.lat])
 				.setPopup(popup)
@@ -80,7 +79,7 @@
 	}
 
 	:global(.mapboxgl-popup-tip) {
-		@apply !border-t-zinc-900;
+		@apply !border-t-zinc-900 !border-l-zinc-900 !border-r-zinc-900 !border-b-zinc-900;
 	}
 
 	:global(.mapboxgl-popup-close-button) {
