@@ -18,7 +18,12 @@
 			logoPosition: 'top-left'
 		});
 
-		const currentLocation = new mapboxgl.Marker().setLngLat([0, 0]).addTo(map);
+		const currentLocationElement = document.createElement('div');
+		currentLocationElement.className = 'current-location-marker';
+
+		const currentLocation = new mapboxgl.Marker(currentLocationElement)
+			.setLngLat([0, 0])
+			.addTo(map);
 		map.addControl(new mapboxgl.AttributionControl(), 'top-right');
 
 		userCoordinates.subscribe(async (coords) => {
@@ -43,10 +48,9 @@
 		});
 
 		const species = await notable.json();
-		console.log(species);
 		species.forEach((s: any) => {
 			const popup = new mapboxgl.Popup().setHTML(
-				`<strong>${s.locName}</strong> <br/>${s.comName}: (${s.howMany} found)`
+				`<div class="text-lg font-bold">${s.comName}</div>${s.locName}: (${s.howMany} found)`
 			);
 
 			const marker = new mapboxgl.Marker({
@@ -81,5 +85,21 @@
 
 	:global(.mapboxgl-popup-close-button) {
 		@apply right-1 top-1;
+	}
+
+	:global(.current-location-marker) {
+		@apply bg-blue-500 h-2 w-2 rounded-full;
+		animation: 1s infinite shadow-pulse;
+	}
+
+	@keyframes shadow-pulse {
+		0% {
+			box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.5);
+			border-radius: 50%;
+		}
+		100% {
+			box-shadow: 0 0 0 15px transparent;
+			border-radius: 50%;
+		}
 	}
 </style>

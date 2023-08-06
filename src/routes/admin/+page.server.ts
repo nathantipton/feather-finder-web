@@ -22,9 +22,7 @@ export const actions: Actions = {
 
         const adminClient = new AlgoliaAdminClient();
 
-        const algResponse = await adminClient.addRegionToSpeciesRecords(region, species);
-
-        console.log(algResponse);
+        await adminClient.addRegionToSpeciesRecords(region, species);
 
         return {
             status: 200
@@ -36,9 +34,7 @@ export const actions: Actions = {
 
         const adminClient = new AlgoliaAdminClient();
 
-        const algResponse = await adminClient.flagSpeciesAsHybrid();
-
-        console.log(algResponse);
+        await adminClient.flagSpeciesAsHybrid();
 
         return {
             status: 200

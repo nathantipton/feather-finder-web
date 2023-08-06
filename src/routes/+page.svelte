@@ -7,7 +7,7 @@
 		<NotableSpeciesMap />
 	</div>
 	<div class="md:-mt-8 bg-zinc-900 z-40 container mx-auto md:rounded-xl max-w-2xl mb-4 p-4">
-		<form class="w-full" action="/results">
+		<form class="w-full" action="/results" autocomplete="off">
 			<div class="form-control flex flex-row join">
 				<input
 					class="input flex-1 join-item"
