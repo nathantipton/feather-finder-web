@@ -15,11 +15,21 @@ export class AlgoliaSearchClient implements App.SearchClient {
         this.#index = this.#client.initIndex(index);
     }
 
-    query(query: string, onlyUS: boolean = true): Promise<any> {
-        return this.#index.search(query,
-            {
-                filters: onlyUS ? 'regions:US' : 'undefined'
+    query(query: string, onlyUS: boolean = true, includeHybrid: boolean = false): Promise<any> {
+        let filters = '';
+
+        // If onlyUS is true, add the regions:US filter
+        if (onlyUS) {
+            filters = 'regions:US';
+        }
+
+        if (!includeHybrid) {
+            if (filters) {
+                filters += ' AND ';
             }
-        );
+            filters += 'hybrid:false';
+        }
+
+        return this.#index.search(query, { filters });
     }
 }

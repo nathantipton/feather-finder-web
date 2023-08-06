@@ -30,5 +30,19 @@ export const actions: Actions = {
             status: 200
         }
 
+    },
+
+    flag_hybrid: async () => {
+
+        const adminClient = new AlgoliaAdminClient();
+
+        const algResponse = await adminClient.flagSpeciesAsHybrid();
+
+        console.log(algResponse);
+
+        return {
+            status: 200
+        }
+
     }
 }

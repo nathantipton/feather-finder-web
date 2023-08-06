@@ -30,6 +30,31 @@ export class AlgoliaAdminClient {
 
         return adminClient.#index.partialUpdateObjects(speciesRecords);
     }
+
+    async flagSpeciesAsHybrid() {
+        const adminClient = new AlgoliaAdminClient();
+
+        const hits: any[] = [];
+
+        // Step 1: Retrieve all records from the index using browseObjects
+        await this.#index.browseObjects({
+            query: '', // Retrieve all records
+            batch: batch => hits.push(...batch)
+        });
+
+        // Step 2: Iterate over each record and check for "(hybrid)" in comName
+        const updatedRecords = hits.map(record => {
+            if (record.comName && record.comName.includes("(hybrid)")) {
+                record.hybrid = true;
+            } else {
+                record.hybrid = false;
+            }
+            return record;
+        });
+        
+        // Step 3: Update the records in the index
+        await this.#index.partialUpdateObjects(updatedRecords);
+    }
 }
 
 
