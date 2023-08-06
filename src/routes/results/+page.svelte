@@ -4,15 +4,15 @@
 </script>
 
 <div class="px-4">
-	<h1>Results for "{results.query}"</h1>
+	<h2>Results for "{results.query}"</h2>
 	<p>Found {results.nbHits} species in {results.serverTimeMS || results.processingTimeMS}ms</p>
 
 	<div class="divider" />
 	<div class="flex flex-col gap-4">
 		{#each results.hits as result}
 			<div class="dark:bg-zinc-900 p-4 rounded">
-				<h2>{result.comName}</h2>
-				<h3>{result.familyComName}</h3>
+				<h4>{result.comName}</h4>
+				<h6>{result.familyComName}</h6>
 				<p>{result.sciName}</p>
 			</div>
 		{/each}
