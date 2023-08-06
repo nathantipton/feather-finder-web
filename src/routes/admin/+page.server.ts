@@ -14,7 +14,7 @@ export const load = async () => {
 
 export const actions: Actions = {
     sync_region: async () => {
-
+        // TODO: Add a region parameter to the request and create a script to run this for all regions
         const region = 'US-NC';
 
         const response = await getSpeciesByRegion(region);

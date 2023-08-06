@@ -5,7 +5,7 @@
 
 <div class="px-4">
 	<h2>Results for "{results.query}"</h2>
-	<p>Found {results.nbHits} species in {results.serverTimeMS || results.processingTimeMS}ms</p>
+	<p>Found {results.nbHits} species in {results.processingTimeMS}ms</p>
 
 	<div class="divider" />
 	<div class="flex flex-col gap-4">

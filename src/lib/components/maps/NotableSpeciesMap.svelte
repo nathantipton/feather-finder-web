@@ -1,5 +1,6 @@
 <script lang="ts">
 	import mapboxgl from '$lib/mapbox';
+	import type { NearbyNotableSpecies_DTO } from '$lib/models/ebird';
 	import { getUserLocation, userCoordinates } from '$lib/stores/location';
 	import postcss from 'postcss';
 	import { onMount } from 'svelte';
@@ -47,14 +48,14 @@
 			})
 		});
 
-		const species = await notable.json();
-		species.forEach((s: any) => {
+		const species: NearbyNotableSpecies_DTO[] = await notable.json();
+		species.forEach((s) => {
 			const popup = new mapboxgl.Popup().setHTML(
 				`<div class="text-lg font-bold">${s.comName}</div>${s.locName}: (${s.howMany} found)`
 			);
 
-			const marker = new mapboxgl.Marker({
-				color: getDaysBackColor(s.obsDt)
+			new mapboxgl.Marker({
+				color: getDaysBackColor(new Date(s.obsDt))
 			})
 				.setLngLat([s.lng, s.lat])
 				.setPopup(popup)
