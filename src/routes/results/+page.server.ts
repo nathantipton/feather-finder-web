@@ -3,7 +3,7 @@ import { error } from "@sveltejs/kit";
 import type { PageServerLoad } from "./$types";
 
 export const load: PageServerLoad = async ({ url }) => {
-    const query = url.searchParams.get('s');
+    const query = url.searchParams.get('search');
     const searchClient = new AlgoliaSearchClient();
 
     if (!query) {
