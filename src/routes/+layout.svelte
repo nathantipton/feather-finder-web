@@ -9,7 +9,7 @@
 		<a class="text-2xl" href="/">Feather Finder</a>
 	</header>
 
-	<main class="flex-1">
+	<main class="flex-1 flex items-stretch">
 		<slot />
 	</main>
 

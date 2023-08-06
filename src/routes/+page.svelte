@@ -2,7 +2,7 @@
 	import NotableSpeciesMap from '$lib/components/maps/NotableSpeciesMap.svelte';
 </script>
 
-<div class="flex flex-col relative">
+<div class="flex flex-col relative w-full">
 	<div>
 		<NotableSpeciesMap />
 	</div>

@@ -1,0 +1,27 @@
+.mapboxgl-popup-content {
+	@apply bg-zinc-900 text-white p-4 rounded;
+}
+
+.mapboxgl-popup-tip {
+	@apply !border-t-zinc-900 !border-l-zinc-900 !border-r-zinc-900 !border-b-zinc-900;
+}
+
+.mapboxgl-popup-close-button {
+	@apply right-1 top-1;
+}
+
+.current-location-marker {
+	@apply bg-blue-500 h-2 w-2 rounded-full;
+	animation: 1s infinite shadow-pulse;
+}
+
+@keyframes shadow-pulse {
+	0% {
+		box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.5);
+		border-radius: 50%;
+	}
+	100% {
+		box-shadow: 0 0 0 15px transparent;
+		border-radius: 50%;
+	}
+}
