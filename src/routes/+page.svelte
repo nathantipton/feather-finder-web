@@ -1,6 +1,5 @@
 <script lang="ts">
 	import NotableSpeciesMap from '$lib/components/maps/NotableSpeciesMap.svelte';
-
 </script>
 
 <div class="flex flex-col relative">
@@ -8,7 +7,7 @@
 		<NotableSpeciesMap />
 	</div>
 	<div class="md:-mt-8 bg-zinc-900 z-40 container mx-auto md:rounded-xl max-w-2xl mb-4 p-4">
-		<form class=" w-full">
+		<form class="w-full" action="/results">
 			<div class="form-control flex flex-row join">
 				<input
 					class="input flex-1 join-item"

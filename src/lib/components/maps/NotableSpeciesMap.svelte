@@ -9,7 +9,7 @@
 			container: 'notable-species-map',
 			style: 'mapbox://styles/mapbox/dark-v11',
 			center: [0, 0],
-			zoom: 9,
+			zoom: 12,
 			attributionControl: false,
 			logoPosition: 'top-left'
 		});

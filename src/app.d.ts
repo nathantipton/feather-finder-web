@@ -3,9 +3,14 @@
 declare global {
 	namespace App {
 		// interface Error {}
-		// interface Locals {}
+		interface Locals {
+			searchClient: App.SearchClient;
+		}
 		// interface PageData {}
 		// interface Platform {}
+		interface SearchClient {
+			query(query: string): Promise<any>;
+		}
 	}
 }
 

@@ -6,7 +6,7 @@
 <div class="min-h-screen-safe flex flex-col justify-start items-stretch dark:bg-zinc-950">
 	<!-- Header -->
 	<header class="flex flex-row p-4">
-		<div class="text-2xl">Feather Finder</div>
+		<a class="text-2xl" href="/">Feather Finder</a>
 	</header>
 
 	<main class="flex-1">
