@@ -68,18 +68,20 @@
 		});
 
 		const species: SpeciesObservation_DTO[] = await observations.json();
-		species.forEach((s) => {
-			const popup = new mapboxgl.Popup().setHTML(
-				`<div class="text-lg font-bold">${s.comName}</div>${s.locName}: (${s.howMany} found)`
-			);
+		species
+			.sort((a, b) => new Date(a.obsDt).valueOf() - new Date(b.obsDt).valueOf())
+			.forEach((s) => {
+				const popup = new mapboxgl.Popup().setHTML(
+					`<div class="text-lg font-bold">${s.comName}</div>${s.locName}: (${s.howMany} found)`
+				);
 
-			new mapboxgl.Marker({
-				color: getDaysBackColor(new Date(s.obsDt))
-			})
-				.setLngLat([s.lng, s.lat])
-				.setPopup(popup)
-				.addTo(map);
-		});
+				new mapboxgl.Marker({
+					color: getDaysBackColor(new Date(s.obsDt))
+				})
+					.setLngLat([s.lng, s.lat])
+					.setPopup(popup)
+					.addTo(map);
+			});
 	}
 
 	const refetch = () => {
