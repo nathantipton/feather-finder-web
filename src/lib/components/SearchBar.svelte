@@ -15,12 +15,12 @@
 	const dispatcher = createEventDispatcher();
 
 	$: if (query.length > 2) {
-		loading.set(true);
-		showResults.set(true);
 		_.debounce(async () => {
+			loading.set(true);
+			showResults.set(true);
 			await search(query);
 			loading.set(false);
-		}, 500)();
+		}, 300)();
 	} else {
 		showResults.set(false);
 	}
