@@ -32,7 +32,7 @@
 	}
 </script>
 
-<form class="w-full" action="/results" autocomplete="off">
+<form class={`w-full ${$$props.class}`} action="/results" autocomplete="off">
 	<div class="form-control flex flex-row join border border-base-300">
 		<div class="flex-1 relative">
 			<input
@@ -41,10 +41,10 @@
 				name="search"
 				id="search"
 				bind:value={query}
-				placeholder="Search by species name..."
+				placeholder="Search by name..."
 			/>
 			<div
-				class="{$showResults
+				class="{$showResults && !$loading
 					? 'visible'
 					: 'hidden'} absolute w-full max-h-96 overflow-y-auto z-50 bg-base-100 p-4 border border-base-300 mt-2 text-white"
 			>
@@ -63,6 +63,12 @@
 			</div>
 		</div>
 
-		<button class="btn join-item" type="submit">Search</button>
+		<button class="btn w-20 join-item" type="submit">
+			{#if $loading}
+				<div class="loading loading-bars" />
+			{:else}
+				Search
+			{/if}
+		</button>
 	</div>
 </form>
