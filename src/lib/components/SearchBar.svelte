@@ -1,21 +1,28 @@
 <script lang="ts">
 	import { AlgoliaSearchClient } from '$lib/algolia';
 	import { writable } from 'svelte/store';
+	import * as _ from 'underscore';
 
 	let query = '';
 	const showResults = writable(false);
+	const loading = writable(false);
 	const results = writable<any[]>([]);
 	const searchClient = new AlgoliaSearchClient();
 
 	$: if (query.length > 2) {
+		loading.set(true);
 		showResults.set(true);
-
-		searchClient.query(query).then((res) => {
-			results.set(res.hits as any[]);
-			console.log(res.hits);
-		});
+		_.debounce(async () => {
+			await search(query);
+			loading.set(false);
+		}, 500)();
 	} else {
 		showResults.set(false);
+	}
+
+	async function search(q: string) {
+		const res = await searchClient.query(q);
+		results.set(res.hits as any[]);
 	}
 
 	function clearResults() {
