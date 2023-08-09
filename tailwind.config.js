@@ -17,18 +17,18 @@ export default {
   daisyui: {
     themes: [
         {
-          'light': {
-            primary: '#ff6a00',
-            'primary-focus': '#ff5500', // slightly darker shade for focus
-            'primary-content': '#ffffff', // text color on primary color
-            secondary: '#ee0979',
-            'secondary-focus': '#dd006a', // slightly darker shade for focus
-            'secondary-content': '#ffffff', // text color on secondary color
-            info: '#2094f3',
-            success: '#009485',
-            warning: '#ff9900',
-            error: '#ff504d',
-          },
+        //   'light': {
+        //     primary: '#ff6a00',
+        //     'primary-focus': '#ff5500', // slightly darker shade for focus
+        //     'primary-content': '#ffffff', // text color on primary color
+        //     secondary: '#ee0979',
+        //     'secondary-focus': '#dd006a', // slightly darker shade for focus
+        //     'secondary-content': '#ffffff', // text color on secondary color
+        //     info: '#2094f3',
+        //     success: '#009485',
+        //     warning: '#ff9900',
+        //     error: '#ff504d',
+        //   },
           'dark': {
             primary: '#ff6a00',
             'primary-focus': '#ff5500',
