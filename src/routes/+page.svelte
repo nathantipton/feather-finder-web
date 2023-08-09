@@ -8,9 +8,7 @@
 	<div>
 		<NotableSpeciesMap />
 	</div>
-	<div
-		class="md:-mt-8 bg-zinc-50 dark:bg-zinc-800 z-40 container mx-auto md:rounded-xl max-w-2xl mb-4 p-4"
-	>
+	<div class="md:-mt-8 bg-zinc-800 z-40 container mx-auto md:rounded-xl max-w-2xl mb-4 p-4">
 		<SearchBar />
 	</div>
 	<div class="px-4">menu options, recently searched, browse by name</div>
