@@ -2,6 +2,10 @@
 	import { writable } from 'svelte/store';
 	import SearchBar from './SearchBar.svelte';
 	const showSearchBar = writable(false);
+
+	function handleSelect(e: CustomEvent<string>) {
+		showSearchBar.set(false);
+	}
 </script>
 
 {#if !$showSearchBar}
@@ -22,7 +26,7 @@
 
 {#if $showSearchBar}
 	<header class="flex flex-row justify-between w-full items-center p-4 gap-8">
-		<SearchBar class="w-full" />
+		<SearchBar class="w-full" on:select={handleSelect} />
 		<button class="btn btn-ghost" on:click={() => showSearchBar.update((v) => !v)}>
 			<i class="fa-solid fa-xmark" />
 		</button>

@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { AlgoliaSearchClient } from '$lib/algolia';
+	import { createEventDispatcher } from 'svelte';
 	import { writable } from 'svelte/store';
 	import * as _ from 'underscore';
 
@@ -8,6 +9,8 @@
 	const loading = writable(false);
 	const results = writable<any[]>([]);
 	const searchClient = new AlgoliaSearchClient();
+
+	const dispatcher = createEventDispatcher();
 
 	$: if (query.length > 2) {
 		loading.set(true);
@@ -30,6 +33,11 @@
 		showResults.set(false);
 		results.set([]);
 	}
+
+	function handleSelect() {
+		dispatcher('select');
+		clearResults();
+	}
 </script>
 
 <form class={`w-full ${$$props.class}`} action="/results" autocomplete="off">
@@ -51,7 +59,7 @@
 				<ul>
 					{#each $results as result}
 						<li class="p-2 hover:bg-base-200">
-							<a href="/species/{result.speciesCode} " on:click={() => clearResults()}
+							<a href="/species/{result.speciesCode} " on:click={() => handleSelect()}
 								>{result.comName}</a
 							>
 						</li>
