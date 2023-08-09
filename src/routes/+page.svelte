@@ -1,4 +1,6 @@
 <script lang="ts">
+	import SearchBar from '$lib/components/SearchBar.svelte';
+
 	import NotableSpeciesMap from '$lib/components/maps/NotableSpeciesMap.svelte';
 </script>
 
@@ -6,19 +8,10 @@
 	<div>
 		<NotableSpeciesMap />
 	</div>
-	<div class="md:-mt-8 bg-zinc-900 z-40 container mx-auto md:rounded-xl max-w-2xl mb-4 p-4">
-		<form class="w-full" action="/results" autocomplete="off">
-			<div class="form-control flex flex-row join">
-				<input
-					class="input flex-1 join-item"
-					type="text"
-					name="search"
-					id="search"
-					placeholder="Search by species name..."
-				/>
-				<button class="btn join-item" type="submit">Search</button>
-			</div>
-		</form>
+	<div
+		class="md:-mt-8 bg-zinc-50 dark:bg-zinc-800 z-40 container mx-auto md:rounded-xl max-w-2xl mb-4 p-4"
+	>
+		<SearchBar />
 	</div>
 	<div class="px-4">menu options, recently searched, browse by name</div>
 </div>

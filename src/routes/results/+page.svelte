@@ -12,7 +12,7 @@
 		{#each results.hits as result}
 			<a
 				href={`/species/${result.speciesCode}`}
-				class="dark:bg-zinc-900 p-4 rounded hover:bg-zinc-50 hover:dark:bg-zinc-800 transition-all"
+				class="p-4 rounded"
 			>
 				<h4>{result.comName}</h4>
 				<h6>{result.familyComName}</h6>

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { getUserLocation, userCoordinates } from '$lib/stores/location';
+	import { getUserLocation, userCoordinates } from '$lib/stores/location.store';
 	import mapboxgl from '$lib/mapbox';
 	import { onMount } from 'svelte';
 	import type { SpeciesObservation_DTO } from '$lib/models/ebird';
@@ -9,9 +9,14 @@
 	let map: mapboxgl.Map | null = null;
 	let lat = 0;
 	let lng = 0;
-	export let speciesCode: string;
+
+	export let speciesCode: string | null;
+	const selectedSpeciesCode = writable<string | null>(null);
+	$: selectedSpeciesCode.set(speciesCode);
 
 	const showRefetchButton = writable(false);
+
+	let speciesMarkers = new Map<string, mapboxgl.Marker>();
 
 	onMount(async () => {
 		await getUserLocation();
@@ -53,7 +58,10 @@
 			map!.setCenter([lng, lat]);
 			currentLocation.setLngLat([lng, lat]);
 
-			await getSpeciesObservations(lat, lng, map!);
+			selectedSpeciesCode.subscribe(async (code) => {
+				if (!code) return;
+				await getSpeciesObservations(lat, lng, map!);
+			});
 		});
 	});
 
@@ -67,6 +75,7 @@
 			})
 		});
 
+		clearSpeciesMarkers();
 		const species: SpeciesObservation_DTO[] = await observations.json();
 		species
 			.sort((a, b) => new Date(a.obsDt).valueOf() - new Date(b.obsDt).valueOf())
@@ -75,16 +84,23 @@
 					`<div class="text-lg font-bold">${s.comName}</div>${s.locName}: (${s.howMany} found)`
 				);
 
-				new mapboxgl.Marker({
+				const marker = new mapboxgl.Marker({
 					color: getDaysBackColor(new Date(s.obsDt))
 				})
 					.setLngLat([s.lng, s.lat])
 					.setPopup(popup)
 					.addTo(map);
+					
+				speciesMarkers.set(s.subId, marker);
 			});
 	}
 
-	const refetch = () => {
+	function clearSpeciesMarkers(){
+		speciesMarkers.forEach((marker) => marker.remove());
+		speciesMarkers.clear();
+	};
+
+	function refetch(){
 		getSpeciesObservations(lat, lng, map!);
 		showRefetchButton.set(false);
 	};

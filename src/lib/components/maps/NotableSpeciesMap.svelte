@@ -1,7 +1,7 @@
 <script lang="ts">
 	import mapboxgl from '$lib/mapbox';
 	import type { NearbyNotableSpecies_DTO } from '$lib/models/ebird';
-	import { getUserLocation, userCoordinates } from '$lib/stores/location';
+	import { getUserLocation, userCoordinates } from '$lib/stores/location.store';
 	import { getDaysBackColor } from '$lib/utilities/maps';
 	import { onMount } from 'svelte';
 
@@ -55,6 +55,8 @@
 				const popup = new mapboxgl.Popup().setHTML(
 					`<div class="text-lg font-bold">${s.comName}</div>${s.locName}: (${s.howMany} found)`
 				);
+
+				
 
 				new mapboxgl.Marker({
 					color: getDaysBackColor(new Date(s.obsDt))

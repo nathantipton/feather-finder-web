@@ -2,10 +2,10 @@
 	import { page } from '$app/stores';
 	import SpeciesObservationsMap from '$lib/components/maps/SpeciesObservationsMap.svelte';
 
-	const speciesCode = $page.params.speciesCode;
 	export let data;
 
-	const { speciesDetails } = data;
+	$: ({ speciesDetails } = data);
+	$: ({ speciesCode } = $page.params);
 </script>
 
 <div class="flex flex-col w-full items-stretch justify-start">

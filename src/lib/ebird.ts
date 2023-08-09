@@ -24,7 +24,7 @@ export function getNotableNearbySpecies(coordinates: { lat: number, lng: number 
  * @returns 
  */
 export function getSpeciesObservationsByCoords(coordinates: { lat: number, lng: number }, speciesCode: string) {
-    return fetch(`https://api.ebird.org/v2/data/nearest/geo/recent/${speciesCode}?lat=${coordinates.lat}&lng=${coordinates.lng}&back=30`, {
+    return fetch(`https://api.ebird.org/v2/data/nearest/geo/recent/${speciesCode}?lat=${coordinates.lat}&lng=${coordinates.lng}&back=30&maxResults=400`, {
         headers: {
             'X-eBirdApiToken': PRIVATE_EBIRD_API_KEY
         }

@@ -19,7 +19,9 @@
 		"@playwright/test": "^1.28.1",
 		"@sveltejs/adapter-auto": "^2.0.0",
 		"@sveltejs/kit": "^1.20.4",
+		"@types/lodash": "^4.14.196",
 		"@types/mapbox-gl": "^2.7.12",
+		"@types/underscore": "^1.11.6",
 		"@typescript-eslint/eslint-plugin": "^5.45.0",
 		"@typescript-eslint/parser": "^5.45.0",
 		"algoliasearch": "^4.19.1",
@@ -28,6 +30,8 @@
 		"eslint": "^8.28.0",
 		"eslint-config-prettier": "^8.5.0",
 		"eslint-plugin-svelte": "^2.30.0",
+		"instantsearch.js": "^4.56.8",
+		"lodash": "^4.17.21",
 		"postcss": "^8.4.27",
 		"prettier": "^2.8.0",
 		"prettier-plugin-svelte": "^2.10.1",
@@ -36,11 +40,15 @@
 		"tailwindcss": "^3.3.3",
 		"tslib": "^2.4.1",
 		"typescript": "^5.0.0",
+		"underscore": "^1.13.6",
 		"vite": "^4.4.2",
 		"vitest": "^0.32.2"
 	},
 	"type": "module",
 	"dependencies": {
+		"@fontsource-variable/baloo-2": "^5.0.8",
+		"@fontsource/bebas-neue": "^5.0.8",
+		"@fontsource/pacifico": "^5.0.8",
 		"mapbox-gl": "^2.15.0"
 	}
 }

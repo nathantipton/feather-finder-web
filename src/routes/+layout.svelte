@@ -1,13 +1,13 @@
 <script lang="ts">
+	import Header from '$lib/components/Header.svelte';
+	import '@fontsource/bebas-neue';
 	import '../styles/app.postcss';
 </script>
 
 <!-- Main -->
-<div class="min-h-screen-safe flex flex-col justify-start items-stretch dark:bg-zinc-950">
+<div class="min-h-screen-safe flex flex-col justify-start items-stretch">
 	<!-- Header -->
-	<header class="flex flex-row p-4">
-		<a class="text-2xl" href="/">Feather Finder</a>
-	</header>
+	<Header />
 
 	<main class="flex-1 flex items-stretch">
 		<slot />
