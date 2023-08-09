@@ -1,12 +1,14 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
 	import { AlgoliaSearchClient } from '$lib/algolia';
 	import { createEventDispatcher } from 'svelte';
 	import { writable } from 'svelte/store';
 	import * as _ from 'underscore';
-
+	// TODO: The whole dropdown search bar is a mess. Refactor it.
 	let query = '';
 	const showResults = writable(false);
 	const loading = writable(false);
+	const isFocused = writable(false);
 	const results = writable<any[]>([]);
 	const searchClient = new AlgoliaSearchClient();
 
@@ -34,9 +36,11 @@
 		results.set([]);
 	}
 
-	function handleSelect() {
+	function handleSelect(speciesCode: string) {
 		dispatcher('select');
 		clearResults();
+		showResults.set(false);
+		goto(`/species/${speciesCode}`);
 	}
 </script>
 
@@ -49,19 +53,18 @@
 				name="search"
 				id="search"
 				bind:value={query}
+				on:focus={() => isFocused.set(true)}
 				placeholder="Search by name..."
 			/>
 			<div
-				class="{$showResults && !$loading
+				class="{$showResults && !$loading && $isFocused
 					? 'visible'
 					: 'hidden'} absolute w-full max-h-96 overflow-y-auto z-50 bg-base-100 p-4 border border-base-300 mt-2 text-white"
 			>
 				<ul>
 					{#each $results as result}
 						<li class="p-2 hover:bg-base-200">
-							<a href="/species/{result.speciesCode} " on:click={() => handleSelect()}
-								>{result.comName}</a
-							>
+							<button on:click={() => handleSelect(result.speciesCode)}>{result.comName}</button>
 						</li>
 					{/each}
 					{#if $results.length === 0}
