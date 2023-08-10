@@ -30,7 +30,7 @@
 </script>
 
 <div class="flex flex-col relative w-full">
-	<div>
+	<div class="h-96">
 		<NotableSpeciesMap colorScheme={$colorScheme} />
 	</div>
 	<div

@@ -15,15 +15,16 @@
 </script>
 
 <div class="px-4 w-full">
-	<h2>Results for "{results.query}"</h2>
-	<p>Found {results.nbHits} species in {results.processingTimeMS}ms</p>
-
+	<div class="flex flex-row justify-between items-baseline">
+		<h4>Results for "{results.query}"</h4>
+		<p>Found {results.nbHits} species in {results.processingTimeMS}ms</p>
+	</div>
 	<div class="divider" />
-	<div class="flex flex-col gap-4">
+	<div class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
 		{#each results.hits as result, index}
 			<a
 				href={`/species/${result.speciesCode}`}
-				class="p-4 rounded"
+				class="p-4 rounded bg-base-200 border border-base-300 hover:bg-base-300"
 				on:click={() => handleSelection(result, index + 1)}
 			>
 				<h4>{result.comName}</h4>

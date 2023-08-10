@@ -69,4 +69,4 @@
 	}
 </script>
 
-<div id="notable-species-map" class="h-96" />
+<div id="notable-species-map" class="h-full w-full" />
