@@ -8,8 +8,8 @@
 	$: queryID = results.queryID;
 
 	function handleSelection(record: SpeciesRecord, position: number) {
-		if(!queryID) return;
-		AlgoliaSearchClient.objectClickedAfterSearch(queryID, record.speciesCode, position)
+		if (!queryID) return;
+		AlgoliaSearchClient.objectClickedAfterSearch(queryID, record.speciesCode, position);
 		goto(`/species/${record.speciesCode}`);
 	}
 </script>
@@ -24,7 +24,7 @@
 			<a
 				href={`/species/${result.speciesCode}`}
 				class="p-4 rounded"
-				on:click={() => handleSelection(result, index)}
+				on:click={() => handleSelection(result, index + 1)}
 			>
 				<h4>{result.comName}</h4>
 				<h6>{result.familyComName}</h6>

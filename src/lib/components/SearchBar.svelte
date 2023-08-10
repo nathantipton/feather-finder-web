@@ -80,7 +80,7 @@
 				<ul>
 					{#each $results as result, index}
 						<li class="p-2 hover:bg-base-200">
-							<button type="button" on:click={() => handleSelect(result.speciesCode, index)}
+							<button type="button" on:click={() => handleSelect(result.speciesCode, index + 1)}
 								>{result.comName}</button
 							>
 						</li>
