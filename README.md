@@ -19,3 +19,11 @@ Feather Finder is a personalized web application that grew out of my and my wife
 ### Notes
 
 Feather Finder is currently undergoing a rebuilding process, where I'm considering various technology stacks that would optimize its performance and user experience. This ongoing process involves continuous learning and exploration of various technologies to ensure the app remains efficient, reliable, and responsive. Stay tuned for updates on the enhanced version of Feather Finder!
+
+### Up Next
+
+- User Accounts
+- Favorites
+- Recent Searches
+- Share Found Observations
+- Recommendations
