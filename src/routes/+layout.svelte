@@ -18,9 +18,7 @@
 		content="Explore and identify species of birds that have been spotted in your vicinity. Join the Feather Finder community today!"
 	/>
 	<meta property="og:image" content="/og_image_banner.png" />
-	<!-- Replace with the URL to your image -->
 	<meta property="og:url" content="https://feather-finder.com" />
-	<!-- Replace with your website URL -->
 	<meta property="og:type" content="website" />
 	<meta property="og:site_name" content="Feather Finder" />
 
