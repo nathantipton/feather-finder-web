@@ -1,38 +1,17 @@
-# create-svelte
+# Feather Finder
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+![Banner](image.png)
 
-## Creating a project
+Feather Finder is a personalized web application that grew out of my and my wife's shared passion for birding. The app leverages location-based technology, providing us and other users with a quick and easy tool to discover notable bird species in our vicinity.
 
-If you're seeing this, you've probably already done this step. Congrats!
+---
+### Tech Stack
+- SvelteKit 
+- Vercel
+- Supabase
+- Mapbox
+- eBird API
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
 
-# create a new project in my-app
-npm create svelte@latest my-app
-```
-
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-## Building
-
-To create a production version of your app:
-
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+### Notes
+Feather Finder is currently undergoing a rebuilding process, where I'm considering various technology stacks that would optimize its performance and user experience. This ongoing process involves continuous learning and exploration of various technologies to ensure the app remains efficient, reliable, and responsive. Stay tuned for updates on the enhanced version of Feather Finder!
