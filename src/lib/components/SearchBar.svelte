@@ -68,22 +68,22 @@
 				placeholder="Search by name..."
 			/>
 			<div
-				class="{$showResults && !$loading && $isFocused
+				class="{$showResults && $isFocused
 					? 'visible'
 					: 'hidden'} absolute w-full max-h-96 overflow-y-auto z-50 bg-base-100 p-4 border border-base-300 mt-2 text-base-content"
 			>
-				<ul>
-					{#each $results as result}
-						<li class="p-2 hover:bg-base-200">
-							<button type="button" on:click={() => handleSelect(result.speciesCode)}
-								>{result.comName}</button
-							>
-						</li>
-					{/each}
-					{#if $results.length === 0}
-						<li class="p-2">No results found</li>
-					{/if}
-				</ul>
+					<ul>
+						{#each $results as result}
+							<li class="p-2 hover:bg-base-200">
+								<button type="button" on:click={() => handleSelect(result.speciesCode)}
+									>{result.comName}</button
+								>
+							</li>
+						{/each}
+						{#if $results.length === 0 && !$loading}
+							<li class="p-2">No results found</li>
+						{/if}
+					</ul>
 			</div>
 		</div>
 
