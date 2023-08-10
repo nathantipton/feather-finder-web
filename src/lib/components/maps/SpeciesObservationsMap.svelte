@@ -1,9 +1,11 @@
 <script lang="ts">
 	import { getUserLocation, userCoordinates } from '$lib/stores/location.store';
-	import mapboxgl from '$lib/mapbox';
-	import { onMount } from 'svelte';
+	import mapboxgl, { buildMap, buildUserLocationMarker } from '$lib/mapbox';
+	import { onDestroy, onMount } from 'svelte';
 	import type { SpeciesObservation_DTO } from '$lib/models/ebird';
-	import { writable } from 'svelte/store';
+	import { writable, type Unsubscriber } from 'svelte/store';
+	import { page } from '$app/stores';
+	import { goto } from '$app/navigation';
 	import { getDaysBackColor } from '$lib/utilities/maps';
 
 	let map: mapboxgl.Map | null = null;
@@ -15,55 +17,47 @@
 	$: selectedSpeciesCode.set(speciesCode);
 
 	const showRefetchButton = writable(false);
+	const hasCoordParams = writable(false);
 
+	let currentLocationMarker: mapboxgl.Marker;
 	let speciesMarkers = new Map<string, mapboxgl.Marker>();
+	let userCoordsUnsubscriber: Unsubscriber = () => {};
 
 	onMount(async () => {
+		initializeMap();
+	});
+
+	onDestroy(() => {
+		if (map) {
+			map.remove();
+			map = null;
+		}
+		userCoordsUnsubscriber();
+	});
+
+	async function initializeMap() {
 		await getUserLocation();
-		map = new mapboxgl.Map({
-			container: 'species-observations-map',
-			style: 'mapbox://styles/mapbox/dark-v11',
-			center: [0, 0],
-			zoom: 9,
-			attributionControl: false,
-			logoPosition: 'top-left'
-		});
+		map = buildMap('species-observations-map');
 
 		if (!map) return;
 
-		const currentLocationElement = document.createElement('div');
-		currentLocationElement.className = 'current-location-marker';
+		// Set map coordinates from query params
+		const queryParams = new URLSearchParams(window.location.search);
+		setMapCoordinatesFromParams(queryParams);
 
-		const currentLocation = new mapboxgl.Marker(currentLocationElement)
-			.setLngLat([0, 0])
-			.addTo(map);
+		// Add user location marker
+		currentLocationMarker = buildUserLocationMarker(map);
+
 		map.addControl(new mapboxgl.AttributionControl(), 'top-right');
+		map.on('moveend', handleMapMove);
 
-		map.on('moveend', () => {
-			const center = map!.getCenter();
-			if (center.lat === lat && center.lng === lng) {
-				return;
-			}
-			lat = center.lat;
-			lng = center.lng;
+		initializeUserCoordinatesListener();
 
-			showRefetchButton.set(true);
+		selectedSpeciesCode.subscribe(async (code) => {
+			if (!code) return;
+			await getSpeciesObservations(lat, lng, map!);
 		});
-
-		userCoordinates.subscribe(async (coords) => {
-			if (!coords || (coords.lat === lat && coords.lng === lng)) return;
-			lat = coords.lat;
-			lng = coords.lng;
-
-			map!.setCenter([lng, lat]);
-			currentLocation.setLngLat([lng, lat]);
-
-			selectedSpeciesCode.subscribe(async (code) => {
-				if (!code) return;
-				await getSpeciesObservations(lat, lng, map!);
-			});
-		});
-	});
+	}
 
 	async function getSpeciesObservations(lat: number, lng: number, map: mapboxgl.Map) {
 		const observations = await fetch('/api/ebird/observations_by_species', {
@@ -90,20 +84,67 @@
 					.setLngLat([s.lng, s.lat])
 					.setPopup(popup)
 					.addTo(map);
-					
+
 				speciesMarkers.set(s.subId, marker);
 			});
 	}
 
-	function clearSpeciesMarkers(){
+	function clearSpeciesMarkers() {
 		speciesMarkers.forEach((marker) => marker.remove());
 		speciesMarkers.clear();
-	};
+	}
 
-	function refetch(){
+	function refetch() {
 		getSpeciesObservations(lat, lng, map!);
 		showRefetchButton.set(false);
-	};
+	}
+
+	function handleMapMove() {
+		const center = map!.getCenter();
+		const zoom = map!.getZoom();
+		if (center.lat === lat && center.lng === lng) {
+			return;
+		}
+		lat = center.lat;
+		lng = center.lng;
+
+		let query = new URLSearchParams($page.url.searchParams.toString());
+		query.set('lat', lat.toString());
+		query.set('lng', lng.toString());
+		query.set('z', zoom.toString());
+
+		showRefetchButton.set(true);
+
+		goto(`?${query.toString()}`);
+	}
+
+	function setMapCoordinatesFromParams(queryParams: URLSearchParams) {
+		const lat = queryParams.get('lat');
+		const lng = queryParams.get('lng');
+		const zoom = queryParams.get('z');
+
+		if (lat && lng) {
+			hasCoordParams.set(true);
+			setMapPosition(parseFloat(lat), parseFloat(lng), parseFloat(zoom || '9'));
+		}
+	}
+
+	function initializeUserCoordinatesListener() {
+		userCoordsUnsubscriber = userCoordinates.subscribe(async (coords) => {
+			if (!coords || (coords.lat === lat && coords.lng === lng)) return;
+			if (!$hasCoordParams) {
+				setMapPosition(coords.lat, coords.lng, 9);
+			}
+			currentLocationMarker.setLngLat([coords.lng, coords.lat]);
+		});
+	}
+
+	function setMapPosition(lat: number, lng: number, zoom: number) {
+		lat = lat;
+		lng = lng;
+		map?.setCenter([lng, lat]);
+		map?.setZoom(zoom);
+	}
 </script>
 
 <div id="species-observations-map" class="w-full h-full" />

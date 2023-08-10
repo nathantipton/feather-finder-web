@@ -56,8 +56,6 @@
 					`<div class="text-lg font-bold">${s.comName}</div>${s.locName}: (${s.howMany} found)`
 				);
 
-				
-
 				new mapboxgl.Marker({
 					color: getDaysBackColor(new Date(s.obsDt))
 				})

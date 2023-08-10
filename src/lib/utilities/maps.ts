@@ -5,3 +5,4 @@ export function getDaysBackColor(date: Date) {
     if (days < 2) return '#ea580c';
     if (days < 3) return '#eab308';
 }
+
