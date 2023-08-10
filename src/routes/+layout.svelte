@@ -17,7 +17,7 @@
 		property="og:description"
 		content="Explore and identify species of birds that have been spotted in your vicinity. Join the Feather Finder community today!"
 	/>
-	<meta property="og:image" content="%sveltekit.assets%/og_image_banner.png" />
+	<meta property="og:image" content="/og_image_banner.png" />
 	<!-- Replace with the URL to your image -->
 	<meta property="og:url" content="https://feather-finder.com" />
 	<!-- Replace with your website URL -->
@@ -31,7 +31,7 @@
 		name="twitter:description"
 		content="Explore and identify species of birds that have been spotted in your vicinity. Join the Feather Finder community today!"
 	/>
-	<meta name="twitter:image" content="%sveltekit.assets%/og_image_banner.png" />
+	<meta name="twitter:image" content="/og_image_banner.png" />
 </svelte:head>
 
 <!-- Main -->
