@@ -9,6 +9,7 @@
 		userCoordinates,
 		userCoordinatesLoaded
 	} from '$lib/stores/location.store.js';
+	import { colorScheme } from '$lib/stores/ui.store.js';
 	import { onMount } from 'svelte';
 	import { writable } from 'svelte/store';
 
@@ -113,7 +114,7 @@
 	{#if $center && $zoom && $userCoordinatesLoaded}
 		<div class="relative flex-1">
 			<ObservationsMap
-				style={DEFAULT_MAP_STYLE}
+				colorScheme={$colorScheme}
 				center={$center}
 				zoom={$zoom}
 				observations={$observations}

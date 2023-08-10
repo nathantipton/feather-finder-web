@@ -5,14 +5,17 @@
 	import { getDaysBackColor } from '$lib/utilities/maps';
 	import { onMount } from 'svelte';
 
+	// TODO: Refactor this the logic out of this map
 	let lat = 0;
 	let lng = 0;
+
+	export let colorScheme: 'dark' | 'light';
 
 	onMount(async () => {
 		await getUserLocation();
 		const map = new mapboxgl.Map({
 			container: 'notable-species-map',
-			style: 'mapbox://styles/mapbox/dark-v11',
+			style: `mapbox://styles/mapbox/${colorScheme}-v11`,
 			center: [0, 0],
 			zoom: 9,
 			attributionControl: false,

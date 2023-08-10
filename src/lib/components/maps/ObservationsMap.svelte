@@ -12,7 +12,7 @@
 	const mapInitialized = writable(false);
 	let map: mapboxgl.Map | null = null;
 
-	export let style: 'light' | 'dark' = 'dark';
+	export let colorScheme: 'light' | 'dark' = 'dark';
 	export let center: [number, number];
 	export let zoom: number;
 	export let observations: SpeciesObservation_DTO[] = [];
@@ -50,7 +50,7 @@
 	});
 
 	function initializeMap() {
-		map = buildMap('species-observations-map', style);
+		map = buildMap('species-observations-map', colorScheme);
 		map.addControl(new mapboxgl.AttributionControl(), 'top-right');
 		map.on('moveend', handleMapMove);
 		map.setCenter(center);

@@ -70,7 +70,7 @@
 			<div
 				class="{$showResults && !$loading && $isFocused
 					? 'visible'
-					: 'hidden'} absolute w-full max-h-96 overflow-y-auto z-50 bg-base-100 p-4 border border-base-300 mt-2 text-white"
+					: 'hidden'} absolute w-full max-h-96 overflow-y-auto z-50 bg-base-100 p-4 border border-base-300 mt-2 text-base-content"
 			>
 				<ul>
 					{#each $results as result}

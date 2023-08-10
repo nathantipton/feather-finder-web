@@ -2,6 +2,12 @@
 	import Header from '$lib/components/Header.svelte';
 	import '@fontsource/bebas-neue';
 	import '../styles/app.postcss';
+	import { browser } from '$app/environment';
+	import { colorSchemeWatcher } from '$lib/utilities/ui';
+
+	if (browser) {
+		colorSchemeWatcher();
+	}
 </script>
 
 <!-- Main -->
