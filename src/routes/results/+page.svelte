@@ -1,6 +1,6 @@
 <script lang="ts">
 	export let data;
-	const { results } = data;
+	$: ({ results } = data);
 </script>
 
 <div class="px-4 w-full">

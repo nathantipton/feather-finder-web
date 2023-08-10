@@ -42,9 +42,20 @@
 		showResults.set(false);
 		goto(`/species/${speciesCode}`);
 	}
+
+	function handleSubmit() {
+		isFocused.set(false);
+		goto(`/results?search=${query}`);
+		results.set([]);
+	}
 </script>
 
-<form class={`w-full ${$$props.class}`} action="/results" autocomplete="off">
+<form
+	class={`w-full ${$$props.class}`}
+	action="/results"
+	autocomplete="off"
+	on:submit={handleSubmit}
+>
 	<div class="form-control flex flex-row join border border-base-300">
 		<div class="flex-1 relative">
 			<input
@@ -64,7 +75,9 @@
 				<ul>
 					{#each $results as result}
 						<li class="p-2 hover:bg-base-200">
-							<button on:click={() => handleSelect(result.speciesCode)}>{result.comName}</button>
+							<button type="button" on:click={() => handleSelect(result.speciesCode)}
+								>{result.comName}</button
+							>
 						</li>
 					{/each}
 					{#if $results.length === 0}
