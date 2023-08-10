@@ -14,7 +14,7 @@
 	>
 		<SearchBar />
 	</div>
-
+	
 	<div class="px-4">{$colorScheme} | menu options, recently searched, browse by name</div>
 </div>
 
