@@ -28,6 +28,9 @@
 		initializeMap();
 
 		center.subscribe((center) => {
+			// Need to fetch observations after map is initialized and center is set
+			// After the first fetch, we don't need to fetch again when center changes
+			// since the fetch is triggered by the refetch event
 			if (center && !$initialFetchComplete) {
 				fetchObservations();
 				initialFetchComplete.set(true);
