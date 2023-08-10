@@ -1,5 +1,5 @@
 import { PUBLIC_MAPBOX_ACCESS_TOKEN } from '$env/static/public';
-import mapboxgl, { Map, Marker } from 'mapbox-gl';
+import mapboxgl from 'mapbox-gl';
 
 mapboxgl.accessToken = PUBLIC_MAPBOX_ACCESS_TOKEN;
 
@@ -15,7 +15,7 @@ export function buildMap(
     style: 'light' | 'dark' = DEFAULT_MAP_STYLE,
     center: [number, number] = DEFAULT_MAP_CENTER,
     zoom: number = DEFAULT_MAP_ZOOM
-): Map {
+): mapboxgl.Map {
     return new mapboxgl.Map({
         container,
         style: `mapbox://styles/mapbox/${style}-v11`,
@@ -27,9 +27,9 @@ export function buildMap(
 }
 
 
-export function buildUserLocationMarker(map: Map, coordinates: [number, number] = [0, 0]): Marker {
+export function buildUserLocationMarker(map: mapboxgl.Map, coordinates: [number, number] = [0, 0]): mapboxgl.Marker {
     const currentLocationElement = document.createElement('div');
     currentLocationElement.className = 'current-location-marker';
 
-    return new Marker(currentLocationElement).setLngLat(coordinates).addTo(map);
+    return new mapboxgl.Marker(currentLocationElement).setLngLat(coordinates).addTo(map);
 }
