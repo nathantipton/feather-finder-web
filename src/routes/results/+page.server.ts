@@ -11,7 +11,7 @@ export const load: PageServerLoad = async ({ url }) => {
     }
 
     const results = await searchClient.query(query);
-
+    
     return {
         results
     }

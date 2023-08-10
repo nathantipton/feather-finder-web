@@ -11,6 +11,7 @@
 	const isFocused = writable(false);
 	const results = writable<any[]>([]);
 	const searchClient = new AlgoliaSearchClient();
+	const queryID = writable<string | null>(null);
 
 	const dispatcher = createEventDispatcher();
 
@@ -27,6 +28,7 @@
 
 	async function search(q: string) {
 		const res = await searchClient.query(q);
+		queryID.set(res.queryID ?? null);
 		results.set(res.hits as any[]);
 	}
 
@@ -36,10 +38,13 @@
 		results.set([]);
 	}
 
-	function handleSelect(speciesCode: string) {
+	function handleSelect(speciesCode: string, position: number) {
 		dispatcher('select');
 		clearResults();
 		showResults.set(false);
+		if ($queryID) {
+			AlgoliaSearchClient.objectClickedInSearchResults($queryID, speciesCode, position);
+		}
 		goto(`/species/${speciesCode}`);
 	}
 
@@ -73,9 +78,9 @@
 					: 'hidden'} absolute w-full max-h-96 overflow-y-auto z-50 bg-base-100 p-4 border border-base-300 mt-2 text-base-content"
 			>
 				<ul>
-					{#each $results as result}
+					{#each $results as result, index}
 						<li class="p-2 hover:bg-base-200">
-							<button type="button" on:click={() => handleSelect(result.speciesCode)}
+							<button type="button" on:click={() => handleSelect(result.speciesCode, index)}
 								>{result.comName}</button
 							>
 						</li>

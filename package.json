@@ -31,7 +31,7 @@
 		"eslint": "^8.28.0",
 		"eslint-config-prettier": "^8.5.0",
 		"eslint-plugin-svelte": "^2.30.0",
-		"instantsearch.js": "^4.56.8",
+		"instantsearch.js": "^4.56.9",
 		"lodash": "^4.17.21",
 		"postcss": "^8.4.27",
 		"prettier": "^2.8.0",
@@ -50,6 +50,7 @@
 		"@fontsource-variable/baloo-2": "^5.0.8",
 		"@fontsource/bebas-neue": "^5.0.8",
 		"@fontsource/pacifico": "^5.0.8",
-		"mapbox-gl": "^2.15.0"
+		"mapbox-gl": "^2.15.0",
+		"search-insights": "^2.7.0"
 	}
 }
