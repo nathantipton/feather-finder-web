@@ -15,6 +15,7 @@
 	export let data;
 	const center = writable<[number, number] | null>(null);
 	const zoom = writable<number | null>(null);
+	const initialFetchComplete = writable(false);
 	const observations = writable<SpeciesObservation_DTO[]>([]);
 
 	$: ({ speciesDetails } = data);
@@ -25,6 +26,13 @@
 
 	onMount(() => {
 		initializeMap();
+
+		center.subscribe((center) => {
+			if (center && !$initialFetchComplete) {
+				fetchObservations();
+				initialFetchComplete.set(true);
+			}
+		});
 	});
 
 	async function initializeMap() {
@@ -33,11 +41,6 @@
 			if (loaded) {
 				intializedMapCenterAndZoom();
 			}
-		});
-
-		center.subscribe(async (center) => {
-			if (!center) return;
-			await fetchObservations();
 		});
 	}
 
@@ -60,11 +63,16 @@
 	}
 
 	function handleMapMove(event: CustomEvent<{ lng: number; lat: number; zoom: number }>) {
-		const { lng, lat, zoom } = event.detail;
+		const { lng, lat } = event.detail;
+
 		const queryParams = new URLSearchParams(window.location.search);
 		queryParams.set('lat', parseFloat(lat.toString()).toFixed(4));
 		queryParams.set('lng', parseFloat(lng.toString()).toFixed(4));
-		queryParams.set('zoom', parseFloat(zoom.toString()).toFixed(4));
+		queryParams.set('zoom', parseFloat(event.detail.zoom.toString()).toFixed(4));
+
+		center.set([lng, lat]);
+		zoom.set(event.detail.zoom);
+
 		goto(`?${queryParams.toString()}`);
 	}
 
