@@ -52,6 +52,13 @@ export class AlgoliaSearchClient implements App.SearchClient {
             objectIDs: [objectID],
             positions: [position],
         });
+
+        aa('convertedObjectIDsAfterSearch', {
+            eventName: 'Object Converted in Search Results Page',
+            index,
+            queryID,
+            objectIDs: [objectID],
+        });
     }
 
     static objectClickedInSearchResults(queryID: string, objectID: string, position: number, index: string = 'species') {
@@ -61,6 +68,13 @@ export class AlgoliaSearchClient implements App.SearchClient {
             queryID,
             objectIDs: [objectID],
             positions: [position],
+        });
+
+        aa('convertedObjectIDsAfterSearch', {
+            eventName: 'Object Converted in Search Results Page',
+            index,
+            queryID,
+            objectIDs: [objectID],
         });
     }
 }
