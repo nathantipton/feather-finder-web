@@ -47,6 +47,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@algolia/recommend": "^4.19.1",
 		"@fontsource-variable/baloo-2": "^5.0.8",
 		"@fontsource/bebas-neue": "^5.0.8",
 		"@fontsource/pacifico": "^5.0.8",
