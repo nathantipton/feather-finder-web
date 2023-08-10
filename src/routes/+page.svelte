@@ -39,7 +39,7 @@
 		<SearchBar />
 	</div>
 
-	<div class="p-4 container mx-auto flex flex-col justify-start items-stretch gap-8">
+	<div class="p-4 container mx-auto flex flex-col justify-start items-stretch gap-16">
 		<section class="flex flex-col justify-start items-center gap-8">
 			<h3><i class="fa-solid fa-chart-line mr-2" />Trending Searches</h3>
 			<div class="flex flex-row gap-4 flex-wrap">
@@ -49,7 +49,7 @@
 						class="px-4 py-1 rounded-full border border-base-300"
 					>
 						<div class="whitespace-nowrap">
-							{trend.comName} <i class="fa-solid fa-up-right-from-square fa-xs" />
+							{trend.comName} <i class="fa-solid fa-up-right-from-square fa-xs ml-2" />
 						</div>
 					</a>
 				{/each}
