@@ -10,8 +10,16 @@
 	}
 </script>
 
-{#if !$showSearchBar}
-	<header class="flex flex-row justify-between w-full items-center p-4 gap-8" use:autoAnimate>
+<header
+	class="flex flex-row justify-between w-full items-center p-4 gap-8 border-b border-base-300"
+	use:autoAnimate={{ duration: 100 }}
+>
+	{#if $showSearchBar}
+		<SearchBar class="w-full" on:select={handleSelect} />
+		<button class="btn btn-ghost" on:click={() => showSearchBar.update((v) => !v)}>
+			<i class="fa-solid fa-xmark" />
+		</button>
+	{:else}
 		<a href="/" class="w-56">
 			<img src={$colorScheme === 'dark' ? '/logo_full_white.svg' : '/logo_full_dark.svg'} alt="" />
 		</a>
@@ -23,14 +31,5 @@
 			<i class="fa-solid fa-search" />
 		</button>
 		<SearchBar class="w-full max-w-md hidden md:block" />
-	</header>
-{/if}
-
-{#if $showSearchBar}
-	<header class="flex flex-row justify-between w-full items-center p-4 gap-8" use:autoAnimate>
-		<SearchBar class="w-full" on:select={handleSelect} />
-		<button class="btn btn-ghost" on:click={() => showSearchBar.update((v) => !v)}>
-			<i class="fa-solid fa-xmark" />
-		</button>
-	</header>
-{/if}
+	{/if}
+</header>
