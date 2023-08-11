@@ -11,21 +11,21 @@
 </script>
 
 <header
-	class="flex flex-row justify-between w-full items-center p-4 gap-8 border-b border-base-300 h-24"
+	class="flex flex-row justify-between w-full items-center p-4 gap-2 md:gap-8 border-b border-base-300 h-16 md:h-24"
 	use:autoAnimate={{ duration: 100 }}
 >
 	{#if $showSearchBar}
 		<SearchBar class="w-full" on:select={handleSelect} />
-		<button class="btn btn-ghost" on:click={() => showSearchBar.update((v) => !v)}>
+		<button class="btn btn-ghost btn-circle" on:click={() => showSearchBar.update((v) => !v)}>
 			<i class="fa-solid fa-xmark" />
 		</button>
 	{:else}
-		<a href="/" class="w-56">
+		<a href="/" class="w-40 md:w-56">
 			<img src={$colorScheme === 'dark' ? '/logo_full_white.svg' : '/logo_full_dark.svg'} alt="" />
 		</a>
 
 		<button
-			class="md:hidden text-lg btn-circle btn-ghost"
+			class="md:hidden md:text-lg btn-circle btn-ghost"
 			on:click={() => showSearchBar.update((v) => !v)}
 		>
 			<i class="fa-solid fa-search" />

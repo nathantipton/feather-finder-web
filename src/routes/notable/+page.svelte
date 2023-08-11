@@ -9,7 +9,7 @@
 
 <div class="flex flex-col w-full items-stretch justify-start relative">
 	<div class="p-4">
-		<h2>Nearby Notable Species</h2>
+		<h4>Nearby Notable Species</h4>
 	</div>
 	<NotableSpeciesMap />
 </div>
