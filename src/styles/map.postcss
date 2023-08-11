@@ -1,5 +1,5 @@
 .mapboxgl-popup-content {
-	@apply p-4 rounded-xl dark:bg-zinc-900;
+	@apply p-4 rounded-xl bg-base-100;
 }
 
 .mapboxgl-popup-close-button {
@@ -9,6 +9,22 @@
 .current-location-marker {
 	@apply bg-blue-500 h-2 w-2 rounded-full;
 	animation: 1s infinite shadow-pulse;
+}
+
+.mapboxgl-popup-anchor-bottom .mapboxgl-popup-tip {
+	@apply border-t-base-100;
+}
+
+.mapboxgl-popup-anchor-top .mapboxgl-popup-tip {
+	@apply border-b-base-100;
+}
+
+.mapboxgl-popup-anchor-left .mapboxgl-popup-tip {
+	@apply border-r-base-100;
+}
+
+.mapboxgl-popup-anchor-right .mapboxgl-popup-tip {
+	@apply border-l-base-100;
 }
 
 @keyframes shadow-pulse {
