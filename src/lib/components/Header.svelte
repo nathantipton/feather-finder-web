@@ -11,7 +11,7 @@
 </script>
 
 <header
-	class="flex flex-row justify-between w-full items-center p-4 gap-8 border-b border-base-300"
+	class="flex flex-row justify-between w-full items-center p-4 gap-8 border-b border-base-300 h-24"
 	use:autoAnimate={{ duration: 100 }}
 >
 	{#if $showSearchBar}
