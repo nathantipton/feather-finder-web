@@ -27,6 +27,12 @@
 	const zoom = writable(8);
 	let nextId = 1;
 
+	// when the url changes refetch the observations
+	// ex: when species code changes in the url
+	$: if (fetchUrl && $center) {
+		fetchObservations($center[0], $center[1]);
+	}
+
 	onMount(async () => {
 		await initializeMapCenterAndZoom();
 	});
