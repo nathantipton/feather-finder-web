@@ -13,9 +13,11 @@
 </svelte:head>
 
 <div class="flex flex-col w-full items-stretch justify-start">
-	<div class="px-4 py-2 w-full flex flex-col md:flex-row items-baseline justify-start md:gap-4">
-		<h2>{speciesDetails.comName}</h2>
-		<h6>{speciesDetails.familyComName}</h6>
+	<div
+		class="px-4 py-2 w-full flex flex-col md:flex-row items-baseline justify-start md:gap-4 border-b border-base-300"
+	>
+		<h4>{speciesDetails.comName}</h4>
+		<p>{speciesDetails.familyComName}</p>
 	</div>
 	<SpeciesObservationsMap {speciesCode} />
 </div>
