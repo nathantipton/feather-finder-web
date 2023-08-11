@@ -2,7 +2,6 @@
 	import SearchBar from '$lib/components/SearchBar.svelte';
 
 	import NotableSpeciesMap from '$lib/components/maps/NotableSpeciesMap.svelte';
-	import { colorScheme } from '$lib/stores/ui.store';
 
 	// Fake trends data until model is ready
 	const fakeTrends = [
@@ -28,6 +27,11 @@
 		}
 	];
 </script>
+
+<svelte:head>
+	<title>Feather Finder</title>
+	<meta name="description" content="Find birds near you" />
+</svelte:head>
 
 <div class="flex flex-col relative w-full">
 	<div class="h-96 relative">

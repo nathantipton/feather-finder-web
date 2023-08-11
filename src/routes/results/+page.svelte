@@ -14,6 +14,11 @@
 	}
 </script>
 
+<svelte:head>
+	<title>Results for "{results.query}" | Feather Finder</title>
+	<meta name="description" content={`Results for "${results.query}"`} />
+</svelte:head>
+
 <div class="px-4 w-full">
 	<div class="flex flex-row justify-between items-baseline">
 		<h4>Results for "{results.query}"</h4>
