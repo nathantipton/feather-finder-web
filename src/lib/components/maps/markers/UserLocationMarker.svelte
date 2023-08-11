@@ -5,7 +5,7 @@
 	import { type Writable, derived } from 'svelte/store';
 
 	const mapStore: Writable<mapboxgl.Map | null> = getContext('map');
-	let map;
+	let map: mapboxgl.Map | null = null;
 
 	const loadedMapStore = derived(mapStore, ($map) => $map);
 

@@ -14,12 +14,39 @@
 
 	let marker: mapboxgl.Marker | null = null;
 
+	function handleShareButtonClick() {
+		console.log('shared', observation);
+	}
+
 	loadedMapStore.subscribe(($map) => {
 		map = $map;
 		if (map) {
-			const popup = new mapboxgl.Popup().setHTML(
-				`<div class="text-lg font-bold">${observation.comName}</div>${observation.locName}: (${observation.howMany} found)`
-			);
+			// Create container div for the popup content
+			const divElement = document.createElement('div');
+			divElement.className = 'flex flex-col max-w-xs justify-start items-stretch';
+
+			// Create title
+			const title = document.createElement('h6');
+			title.textContent = observation.comName;
+			divElement.appendChild(title);
+
+			// Create observation info
+			const observationInfo = document.createElement('p');
+			observationInfo.className = 'text-xs';
+			observationInfo.textContent = `${observation.locName}: ${observation.howMany} found`;
+			divElement.appendChild(observationInfo);
+
+			// Create share button
+			const shareBtn = document.createElement('button');
+			shareBtn.className = 'btn btn-sm mt-4';
+			shareBtn.textContent = 'Share';
+			shareBtn.addEventListener('click', handleShareButtonClick);
+			divElement.appendChild(shareBtn);
+
+			const popup = new mapboxgl.Popup({
+				closeButton: false,
+				offset: 25
+			}).setDOMContent(divElement);
 			marker = new mapboxgl.Marker({
 				color: getDaysBackColor(new Date(observation.obsDt))
 			})
