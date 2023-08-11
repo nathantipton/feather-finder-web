@@ -6,7 +6,7 @@ mapboxgl.accessToken = PUBLIC_MAPBOX_ACCESS_TOKEN;
 export const DEFAULT_MAP_CENTER: [number, number] = [-98.58, 39.83];
 export const DEFAULT_MAP_ZOOM = 3.5;
 export const DEFAULT_MAP_STYLE = 'dark';
-
+export const contextKey = 'map';
 
 export default mapboxgl;
 
@@ -24,12 +24,4 @@ export function buildMap(
         attributionControl: false,
         logoPosition: 'top-left'
     });
-}
-
-
-export function buildUserLocationMarker(map: mapboxgl.Map, coordinates: [number, number] = [0, 0]): mapboxgl.Marker {
-    const currentLocationElement = document.createElement('div');
-    currentLocationElement.className = 'current-location-marker';
-
-    return new mapboxgl.Marker(currentLocationElement).setLngLat(coordinates).addTo(map);
 }

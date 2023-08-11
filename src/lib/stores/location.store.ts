@@ -1,43 +1,77 @@
 import { browser } from "$app/environment";
-import { DEFAULT_MAP_ZOOM } from "$lib/mapbox";
-import { writable } from "svelte/store";
+import { derived, writable, type Readable, type Writable } from "svelte/store";
+
+export const DEFAULT_USER_COORDS_ZOOM = 9;
 
 export interface UserCoordinates {
     lat: number;
     lng: number;
-    zoom: number;
+    zoom?: number;
 }
 
-export const userCoordinates = writable<UserCoordinates | null>(null);
-export const userCoordinatesLoaded = writable<boolean>(false);
+export interface CoordinatesState {
+    data: UserCoordinates | null;
+    loading: boolean;
+    error: string | null;
+}
+
+const initialState: CoordinatesState = {
+    data: null,
+    loading: false,
+    error: null
+};
+
+const coordinatesState: Writable<CoordinatesState> = writable(initialState);
+
+
+export const userCoordinates: Readable<UserCoordinates | null> = derived(
+    coordinatesState,
+    $state => $state.data
+);
+
+export const setLoading = (loading: boolean) => {
+    coordinatesState.update(state => ({ ...state, loading }));
+}
+
+export const setError = (error: string) => {
+    coordinatesState.update(state => ({ ...state, error, loading: false }));
+}
+
+export const setCoordinates = (coords: UserCoordinates) => {
+    coordinatesState.update(state => ({ ...state, data: coords, loading: false }));
+}
 
 export const getUserLocation = async () => {
-    if (!browser) return;
 
-    if (navigator.geolocation) {
+    return new Promise((resolve, reject) => {
+        if (!browser) reject("Not in a browser environment");
 
-        // Check permission
-        const result = await navigator.permissions.query({ name: 'geolocation' });
-        if (result.state === 'denied') {
-            throw new Error("Geolocation permission denied");
-        }
+        setLoading(true);
 
-        navigator.geolocation.getCurrentPosition((position) => {
-            userCoordinates.set({
-                lat: position.coords.latitude,
-                lng: position.coords.longitude,
-                zoom: 9
+        if (navigator.geolocation) {
+            navigator.permissions.query({ name: 'geolocation' }).then((permission) => {
+                if (permission.state === 'denied') {
+                    reject("Geolocation permission denied");
+                    return;
+                } else {
+                    navigator.geolocation.getCurrentPosition((position) => {
+                        const coords = {
+                            lat: position.coords.latitude,
+                            lng: position.coords.longitude,
+                            zoom: DEFAULT_USER_COORDS_ZOOM
+                        };
+                        setCoordinates(coords);
+                        resolve(coords);
+                    }, (error) => {
+                        console.error(error.message);
+                        setError(error.message);
+                        reject(new Error(error.message));
+                    });
+                }
             });
-            userCoordinatesLoaded.set(true);
-            return;
-        }, (error) => {
-            console.log(error.message);
-            userCoordinatesLoaded.set(true);
-            throw new Error(error.message);
-        });
-    } else {
-        throw new Error("Geolocation not supported");
-    }
+        } else {
+            reject("Geolocation not supported");
+        }
+    });
 }
-
 

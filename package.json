@@ -51,6 +51,7 @@
 		"@fontsource-variable/baloo-2": "^5.0.8",
 		"@fontsource/bebas-neue": "^5.0.8",
 		"@fontsource/pacifico": "^5.0.8",
+		"@formkit/auto-animate": "^0.7.0",
 		"mapbox-gl": "^2.15.0",
 		"search-insights": "^2.7.0"
 	}

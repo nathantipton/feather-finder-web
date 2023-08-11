@@ -30,8 +30,16 @@
 </script>
 
 <div class="flex flex-col relative w-full">
-	<div class="h-96">
-		<NotableSpeciesMap colorScheme={$colorScheme} />
+	<div class="h-96 relative">
+		<NotableSpeciesMap
+			disableQueryParams={true}
+			disableRefetch={true}
+			disableInteractivity={true}
+		/>
+
+		<a href="/notable" class=" absolute top-6 right-6 btn btn-circle bg-base-100">
+			<i class="fa-solid fa-expand" />
+		</a>
 	</div>
 	<div
 		class="md:-mt-8 bg-base-100 border border-base-300 dark:bg-zinc-800 z-40 container mx-auto md:rounded-xl max-w-2xl mb-4 p-4"

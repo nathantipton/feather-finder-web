@@ -1,107 +1,126 @@
 <script lang="ts">
-	import { buildMap, buildUserLocationMarker } from '$lib/mapbox';
-	import type { SpeciesObservation_DTO } from '$lib/models/ebird';
-	import type { UserCoordinates } from '$lib/stores/location.store';
-	import { getDaysBackColor } from '$lib/utilities/maps';
-	import mapboxgl from 'mapbox-gl';
-	import { createEventDispatcher, onDestroy, onMount } from 'svelte';
+	import { goto } from '$app/navigation';
+	import { page } from '$app/stores';
+	import Map from '$lib/components/maps/Map.svelte';
+	import ObservationMarker from '$lib/components/maps/markers/ObservationMarker.svelte';
+	import UserLocationMarker from '$lib/components/maps/markers/UserLocationMarker.svelte';
+	import mapboxgl, { DEFAULT_MAP_CENTER } from '$lib/mapbox';
+	import type { Observation_DTO } from '$lib/models/ebird';
+	import { getUserLocation, userCoordinates } from '$lib/stores/location.store';
+	import { onMount } from 'svelte';
 	import { writable } from 'svelte/store';
 
-	const dispatcher = createEventDispatcher();
+	/**
+	 * Whether to disable query parameters for the map center and zoom.
+	 */
+	export let disableQueryParams = false;
+	/**
+	 * Whether to disable the refetch button on map move.
+	 */
+	export let disableRefetch = false;
+	export let disableInteractivity = false;
+	export let fetchUrl: string;
+
 	const showRefetchButton = writable(false);
-	const mapInitialized = writable(false);
-	let map: mapboxgl.Map | null = null;
+	const observations = writable<Observation_DTO[]>([]);
+	const center = writable<[number, number] | null>(null);
+	const zoom = writable(8);
+	let nextId = 1;
 
-	export let colorScheme: 'light' | 'dark' = 'dark';
-	export let center: [number, number];
-	export let zoom: number;
-	export let observations: SpeciesObservation_DTO[] = [];
-	export let userLocation: UserCoordinates | null = null;
-
-	let userLocationMarker: mapboxgl.Marker | null = null;
-	let speciesMarkers = new Map<string, mapboxgl.Marker>();
-
-	$: if (userLocation && map) {
-		if (!userLocationMarker) {
-			userLocationMarker = buildUserLocationMarker(map, [userLocation.lng, userLocation.lat]);
-		} else {
-			userLocationMarker.setLngLat([userLocation.lng, userLocation.lat]);
-		}
-	}
-
-	$: if (observations && map) {
-		if (observations.length === 0) {
-			clearSpeciesMarkers();
-		} else {
-			clearSpeciesMarkers();
-			addSpeciesMarkers(observations, map);
-		}
-	}
-
-	onMount(() => {
-		initializeMap();
+	onMount(async () => {
+		await initializeMapCenterAndZoom();
 	});
 
-	onDestroy(() => {
-		if (map) {
-			map.remove();
-			map = null;
+	async function initializeMapCenterAndZoom() {
+		// Get the query parameters
+		const latParam = $page.url.searchParams.get('lat');
+		const lngParam = $page.url.searchParams.get('lng');
+		const zoomParam = $page.url.searchParams.get('zoom');
+
+		if (latParam && lngParam && !disableQueryParams) {
+			center.set([parseFloat(lngParam), parseFloat(latParam)]);
+			zoom.set(zoomParam ? parseFloat(zoomParam) : 8);
+		} else {
+			try {
+				await getUserLocation();
+				if ($userCoordinates) {
+					center.set([$userCoordinates.lng, $userCoordinates.lat]);
+					zoom.set($userCoordinates.zoom || 8);
+				} else {
+					center.set(DEFAULT_MAP_CENTER);
+					zoom.set(8);
+				}
+			} catch (e) {
+				console.error('Error getting user location', e);
+				center.set(DEFAULT_MAP_CENTER);
+			}
 		}
-	});
 
-	function initializeMap() {
-		map = buildMap('species-observations-map', colorScheme);
-		map.addControl(new mapboxgl.AttributionControl(), 'top-right');
-		map.on('moveend', handleMapMove);
-		map.setCenter(center);
-		map.setZoom(zoom);
-		mapInitialized.set(true);
+		if ($center) {
+			fetchObservations($center[0], $center[1]);
+		}
 	}
 
-	function clearSpeciesMarkers() {
-		speciesMarkers.forEach((marker) => marker.remove());
-		speciesMarkers.clear();
-	}
+	async function fetchObservations(lng: number, lat: number) {
+		const notable = await fetch(fetchUrl, {
+			method: 'POST',
+			body: JSON.stringify({
+				lat,
+				lng
+			})
+		});
 
-	function addSpeciesMarkers(observations: SpeciesObservation_DTO[], map: mapboxgl.Map) {
-		observations
-			.sort((a, b) => new Date(a.obsDt).valueOf() - new Date(b.obsDt).valueOf())
-			.forEach((s) => {
-				const popup = new mapboxgl.Popup().setHTML(
-					`<div class="text-lg font-bold">${s.comName}</div>${s.locName}: (${s.howMany} found)`
-				);
+		const observationsData = await notable.json();
+		observationsData.forEach((o: Observation_DTO) => {
+			o.id = nextId++;
+		});
 
-				const marker = new mapboxgl.Marker({
-					color: getDaysBackColor(new Date(s.obsDt))
-				})
-					.setLngLat([s.lng, s.lat])
-					.setPopup(popup)
-					.addTo(map);
+		// Pre-parse dates for performance
+		const preParsedDates = observationsData.map((o: Observation_DTO) =>
+			new Date(o.obsDt).valueOf()
+		);
 
-				speciesMarkers.set(s.subId, marker);
-			});
+		// Sort with pre-parsed dates
+		observationsData.sort((a: Observation_DTO, b: Observation_DTO) => {
+			return preParsedDates[b.id!] - preParsedDates[a.id!];
+		});
+		observations.set(observationsData);
 	}
 
 	function refetch() {
-		dispatcher('refetch');
+		if (!$center) return;
 		showRefetchButton.set(false);
+		fetchObservations($center[0], $center[1]);
 	}
 
-	function handleMapMove() {
-		if (!map) return;
-		const [lng, lat] = map.getCenter().toArray();
-		const zoom = map.getZoom();
+	function handleMove(event: CustomEvent<{ center: mapboxgl.LngLat; zoom: number }>) {
+		const { lng, lat } = event.detail.center;
 
-		showRefetchButton.set($mapInitialized);
-		dispatcher('mapMove', {
-			lng,
-			lat,
-			zoom
-		});
+		if (!disableQueryParams) {
+			$page.url.searchParams.set('lat', parseFloat(lat.toString()).toFixed(4));
+			$page.url.searchParams.set('lng', parseFloat(lng.toString()).toFixed(4));
+			$page.url.searchParams.set('zoom', parseFloat(event.detail.zoom.toString()).toFixed(4));
+			goto(`?${$page.url.searchParams.toString()}`);
+		}
+
+		center.set([lng, lat]);
+		zoom.set(event.detail.zoom);
+		if (!disableRefetch) showRefetchButton.set(true);
 	}
 </script>
 
-<div id="species-observations-map" class="w-full h-full" />
-{#if $showRefetchButton}
-	<button class="absolute z-50 btn bottom-6 left-6" on:click={refetch}>Search this area</button>
-{/if}
+<div class="h-full w-full relative">
+	{#if $center}
+		<Map center={$center} zoom={$zoom} on:move={(e) => handleMove(e)} {disableInteractivity}>
+			{#each $observations as observation (observation.id)}
+				<ObservationMarker {observation} />
+			{/each}
+			<UserLocationMarker />
+		</Map>
+		{#if $showRefetchButton}
+			<button class="btn btn-outline bg-base-100 absolute top-8 right-4" on:click={refetch}
+				>Search this area</button
+			>
+		{/if}
+	{/if}
+</div>

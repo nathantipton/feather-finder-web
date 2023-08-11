@@ -2,6 +2,7 @@
 	import { writable } from 'svelte/store';
 	import SearchBar from './SearchBar.svelte';
 	import { colorScheme } from '$lib/stores/ui.store';
+	import autoAnimate from '@formkit/auto-animate';
 	const showSearchBar = writable(false);
 
 	function handleSelect(e: CustomEvent<string>) {
@@ -10,7 +11,7 @@
 </script>
 
 {#if !$showSearchBar}
-	<header class="flex flex-row justify-between w-full items-center p-4 gap-8">
+	<header class="flex flex-row justify-between w-full items-center p-4 gap-8" use:autoAnimate>
 		<a href="/" class="w-56">
 			<img src={$colorScheme === 'dark' ? '/logo_full_white.svg' : '/logo_full_dark.svg'} alt="" />
 		</a>
@@ -26,7 +27,7 @@
 {/if}
 
 {#if $showSearchBar}
-	<header class="flex flex-row justify-between w-full items-center p-4 gap-8">
+	<header class="flex flex-row justify-between w-full items-center p-4 gap-8" use:autoAnimate>
 		<SearchBar class="w-full" on:select={handleSelect} />
 		<button class="btn btn-ghost" on:click={() => showSearchBar.update((v) => !v)}>
 			<i class="fa-solid fa-xmark" />
