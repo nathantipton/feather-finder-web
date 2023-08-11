@@ -14,8 +14,18 @@
 
 	let marker: mapboxgl.Marker | null = null;
 
-	function handleShareButtonClick() {
+	async function handleShareButtonClick() {
 		console.log('shared', observation);
+		try {
+			await navigator.share({
+				title: `Check out this ${observation.comName}`,
+				text: `A ${observation.comName} was spotted at ${observation.locName}`,
+				// url is the url of the current page
+				url: window.location.href
+			});
+		} catch (err) {
+			console.error(err);
+		}
 	}
 
 	loadedMapStore.subscribe(($map) => {
