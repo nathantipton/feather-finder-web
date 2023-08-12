@@ -2,14 +2,12 @@
 	import Header from '$lib/components/Header.svelte';
 	import '@fontsource/bebas-neue';
 	import '../styles/app.postcss';
-	import { pwaInfo } from 'virtual:pwa-info';
 	import { browser } from '$app/environment';
 	import { colorSchemeWatcher } from '$lib/utilities/ui';
 
 	if (browser) {
 		colorSchemeWatcher();
 	}
-	$: webManifestLink = pwaInfo ? pwaInfo.webManifest.linkTag : '';
 </script>
 
 <svelte:head>
@@ -32,7 +30,6 @@
 		content="Explore and identify species of birds that have been spotted in your vicinity. Join the Feather Finder community today!"
 	/>
 	<meta name="twitter:image" content="/og_image_banner.png" />
-	{@html webManifestLink}
 </svelte:head>
 
 <!-- Main -->
