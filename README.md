@@ -9,6 +9,7 @@ Feather Finder is a personalized web application that grew out of my and my wife
 ### [https://feather-finder.com](https://feather-finder.com)
 
 ### Tech Stack
+![DaisyUI](https://img.shields.io/badge/daisyui-5A0EF8?style=for-the-badge&logo=daisyui&logoColor=white)
 
 - SvelteKit
 - Vercel
