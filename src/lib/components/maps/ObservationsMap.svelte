@@ -25,12 +25,18 @@
 	const observations = writable<Observation_DTO[]>([]);
 	const center = writable<[number, number] | null>(null);
 	const zoom = writable(8);
+	const lastFetchedUrl = writable<string | null>(null);
 	let nextId = 1;
 
 	// when the url changes refetch the observations
 	// ex: when species code changes in the url
 	$: if (fetchUrl && $center) {
-		fetchObservations($center[0], $center[1]);
+		// excluding query params check if the url has changed
+		const baseNewFetchUrl = fetchUrl.split('?')[0];
+		const baseLastFetchedUrl = $lastFetchedUrl?.split('?')[0];
+		if (baseNewFetchUrl !== baseLastFetchedUrl) {
+			fetchObservations($center[0], $center[1]);
+		}
 	}
 
 	onMount(async () => {
@@ -91,6 +97,7 @@
 			return preParsedDates[b.id!] - preParsedDates[a.id!];
 		});
 		observations.set(observationsData);
+		lastFetchedUrl.set(fetchUrl);
 	}
 
 	function refetch() {
