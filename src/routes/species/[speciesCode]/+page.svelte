@@ -14,6 +14,8 @@
 		title={speciesDetails.comName}
 		description={`Check out this map of ${speciesDetails.comName} sightings!`}
 	/> -->
+	<title>{speciesDetails.comName} | Feather Finder</title>
+
 	<meta property="og:title" content={`${speciesDetails.comName} | Feather Finder`} />
 	<meta
 		property="og:description"
