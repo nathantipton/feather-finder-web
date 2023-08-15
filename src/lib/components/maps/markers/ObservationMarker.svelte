@@ -21,7 +21,7 @@
 		try {
 			await navigator.share({
 				title: `Check out this ${observation.comName}`,
-				text: `${observation.comName} was spotted at ${observation.locName} on ${dayjs().to(
+				text: `${observation.comName} was spotted at ${observation.locName} ${dayjs().to(
 					dayjs(observation.obsDt)
 				)}.`,
 				// url is the url of the current page
