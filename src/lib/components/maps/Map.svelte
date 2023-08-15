@@ -12,12 +12,17 @@
 	let map: mapboxgl.Map | null = null;
 	const mapStore = writable<mapboxgl.Map | null>(null);
 
+	const MAP_STYLES = {
+		light: 'mapbox://styles/mapbox/navigation-day-v1',
+		dark: 'mapbox://styles/mapbox/navigation-night-v1'
+	};
+
 	const dispatcher = createEventDispatcher();
 
 	onMount(() => {
 		map = new mapboxgl.Map({
 			container: 'map',
-			style: `mapbox://styles/mapbox/${$colorScheme}-v11`,
+			style: MAP_STYLES[$colorScheme],
 			center,
 			zoom,
 			attributionControl: false,
