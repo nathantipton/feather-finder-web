@@ -16,7 +16,7 @@
 <meta property="og:image" content={image} />
 <meta property="og:url" content={url} />
 <meta property="og:type" content="website" />
-<meta property="og:site_name" content="Feather Finder" />
+<meta property="og:site_name" content={title} />
 
 <!-- Twitter Card Meta Tags -->
 <meta name="twitter:card" content="summary_large_image" />

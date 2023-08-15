@@ -17,24 +17,6 @@
 	});
 </script>
 
-<svelte:head>
-	<title>{$seoData.title} | Feather Finder</title>
-
-	<!-- Open Graph Meta Tags -->
-	<meta property="og:title" content={$seoData.title} />
-	<meta property="og:description" content={$seoData.description} />
-	<meta property="og:image" content={$seoData.image} />
-	<meta property="og:url" content={$seoData.url} />
-	<meta property="og:type" content="website" />
-	<meta property="og:site_name" content="Feather Finder" />
-
-	<!-- Twitter Card Meta Tags -->
-	<meta name="twitter:card" content="summary_large_image" />
-	<meta name="twitter:title" content={$seoData.title} />
-	<meta name="twitter:description" content={$seoData.description} />
-	<meta name="twitter:image" content={$seoData.image} />
-</svelte:head>
-
 <!-- Main -->
 <div class="min-h-screen-safe flex flex-col justify-start items-stretch">
 	<!-- Header -->
