@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import SpeciesObservationsMap from '$lib/components/maps/SpeciesObservationsMap.svelte';
-	import SEO from '$lib/components/SEO.svelte';
 	export let data;
 
 	$: ({ speciesDetails } = data);
@@ -11,10 +10,28 @@
 </script>
 
 <svelte:head>
-	<SEO
+	<!-- <SEO
 		title={speciesDetails.comName}
 		description={`Check out this map of ${speciesDetails.comName} sightings!`}
+	/> -->
+	<meta property="og:title" content={`${speciesDetails.comName} | Feather Finder`} />
+	<meta
+		property="og:description"
+		content={`Check out this map of ${speciesDetails.comName} sightings!`}
 	/>
+	<meta property="og:image" content="https://feather-finder.com/og_image_banner.png" />
+	<meta property="og:url" content={$page.url.toString()} />
+	<meta property="og:type" content="website" />
+	<meta property="og:site_name" content={`${speciesDetails.comName} | Feather Finder`} />
+
+	<!-- Twitter Card Meta Tags -->
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:title" content={`${speciesDetails.comName} | Feather Finder`} />
+	<meta
+		name="twitter:description"
+		content={`Check out this map of ${speciesDetails.comName} sightings!`}
+	/>
+	<meta name="twitter:image" content="https://feather-finder.com/og_image_banner.png" />
 </svelte:head>
 
 <div class="flex flex-col w-full items-stretch justify-start">
