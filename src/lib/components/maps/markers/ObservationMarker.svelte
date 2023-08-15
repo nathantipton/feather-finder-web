@@ -4,6 +4,9 @@
 	import mapboxgl from 'mapbox-gl';
 	import { getContext, onDestroy } from 'svelte';
 	import { derived, type Writable } from 'svelte/store';
+	import dayjs from 'dayjs';
+	import relativeTime from 'dayjs/plugin/relativeTime';
+	dayjs.extend(relativeTime);
 
 	export let observation: Observation_DTO;
 
@@ -18,7 +21,8 @@
 		try {
 			await navigator.share({
 				title: `Check out this ${observation.comName}`,
-				text: `A ${observation.comName} was spotted at ${observation.locName}`,
+				text: `A ${observation.comName} was spotted at ${observation.locName} on ${dayjs().to(
+					dayjs(observation.obsDt))}.`,
 				// url is the url of the current page
 				url: window.location.href
 			});
@@ -44,6 +48,12 @@
 			observationInfo.className = 'text-xs';
 			observationInfo.textContent = `${observation.locName}: ${observation.howMany} found`;
 			divElement.appendChild(observationInfo);
+
+			// Create time info
+			const timeInfo = document.createElement('p');
+			timeInfo.className = 'text-xs';
+			timeInfo.textContent = dayjs().to(dayjs(observation.obsDt));
+			divElement.appendChild(timeInfo);
 
 			// Create share button
 			const shareBtn = document.createElement('button');
