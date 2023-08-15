@@ -1,4 +1,5 @@
 <script lang="ts">
+	export const csr = false;
 	import { page } from '$app/stores';
 	import SpeciesObservationsMap from '$lib/components/maps/SpeciesObservationsMap.svelte';
 	export let data;
