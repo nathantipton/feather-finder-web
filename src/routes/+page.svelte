@@ -1,9 +1,8 @@
 <script lang="ts">
+	import SEO from '$lib/components/SEO.svelte';
 	import SearchBar from '$lib/components/SearchBar.svelte';
-	import NotableSpeciesMap from '$lib/components/maps/NotableSpeciesMap.svelte';
-	import { updateSEOData } from '$lib/stores/seo.store';
 
-	updateSEOData({});
+	import NotableSpeciesMap from '$lib/components/maps/NotableSpeciesMap.svelte';
 
 	// Fake trends data until model is ready
 	const fakeTrends = [
@@ -29,6 +28,10 @@
 		}
 	];
 </script>
+
+<svelte:head>
+	<SEO title="Home" />
+</svelte:head>
 
 <div class="flex flex-col relative w-full">
 	<div class="h-96 relative">

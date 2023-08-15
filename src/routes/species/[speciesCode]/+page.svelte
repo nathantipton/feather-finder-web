@@ -1,20 +1,21 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import SpeciesObservationsMap from '$lib/components/maps/SpeciesObservationsMap.svelte';
-	import { updateSEOData } from '$lib/stores/seo.store';
+	import SEO from '$lib/components/SEO.svelte';
 	export let data;
 
 	$: ({ speciesDetails } = data);
 	$: ({ speciesCode } = $page.params);
 
-	$: if (speciesDetails) {
-		updateSEOData({
-			title: `${speciesDetails.comName}`,
-			description: `Check out this map of ${speciesDetails.comName} sightings!`,
-			url: $page.url.toString()
-		});
-	}
+	$: console.log('page', speciesCode);
 </script>
+
+<svelte:head>
+	<SEO
+		title={speciesDetails.comName}
+		description={`Check out this map of ${speciesDetails.comName} sightings!`}
+	/>
+</svelte:head>
 
 <div class="flex flex-col w-full items-stretch justify-start">
 	<div
