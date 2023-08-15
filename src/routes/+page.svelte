@@ -1,4 +1,5 @@
 <script lang="ts">
+	import SEO from '$lib/components/SEO.svelte';
 	import SearchBar from '$lib/components/SearchBar.svelte';
 
 	import NotableSpeciesMap from '$lib/components/maps/NotableSpeciesMap.svelte';
@@ -28,10 +29,7 @@
 	];
 </script>
 
-<svelte:head>
-	<title>Feather Finder</title>
-	<meta name="description" content="Find birds near you" />
-</svelte:head>
+<SEO title="Home" />
 
 <div class="flex flex-col relative w-full">
 	<div class="h-96 relative">

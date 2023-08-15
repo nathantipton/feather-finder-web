@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import SpeciesObservationsMap from '$lib/components/maps/SpeciesObservationsMap.svelte';
+	import SEO from '$lib/components/SEO.svelte';
 	export let data;
 
 	$: ({ speciesDetails } = data);
@@ -9,10 +10,10 @@
 	$: console.log('page', speciesCode);
 </script>
 
-<svelte:head>
-	<title>{speciesDetails.comName} | Feather Finder</title>
-	<meta name="description" content={`Observations of ${speciesDetails.comName}`} />
-</svelte:head>
+<SEO
+	title={speciesDetails.comName}
+	description={`Check out this map of ${speciesDetails.comName} sightings!`}
+/>
 
 <div class="flex flex-col w-full items-stretch justify-start">
 	<div

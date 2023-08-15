@@ -4,33 +4,14 @@
 	import '../styles/app.postcss';
 	import { browser } from '$app/environment';
 	import { colorSchemeWatcher } from '$lib/utilities/ui';
+	import SEO from '$lib/components/SEO.svelte';
 
 	if (browser) {
 		colorSchemeWatcher();
 	}
 </script>
 
-<svelte:head>
-	<!-- Open Graph Meta Tags -->
-	<meta property="og:title" content="Feather Finder: Discover Birds Nearby" />
-	<meta
-		property="og:description"
-		content="Explore and identify species of birds that have been spotted in your vicinity. Join the Feather Finder community today!"
-	/>
-	<meta property="og:image" content="/og_image_banner.png" />
-	<meta property="og:url" content="https://feather-finder.com" />
-	<meta property="og:type" content="website" />
-	<meta property="og:site_name" content="Feather Finder" />
-
-	<!-- Twitter Card Meta Tags -->
-	<meta name="twitter:card" content="summary_large_image" />
-	<meta name="twitter:title" content="Feather Finder: Discover Birds Nearby" />
-	<meta
-		name="twitter:description"
-		content="Explore and identify species of birds that have been spotted in your vicinity. Join the Feather Finder community today!"
-	/>
-	<meta name="twitter:image" content="/og_image_banner.png" />
-</svelte:head>
+<SEO />
 
 <!-- Main -->
 <div class="min-h-screen-safe flex flex-col justify-start items-stretch">

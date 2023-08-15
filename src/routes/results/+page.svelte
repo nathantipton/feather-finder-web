@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { AlgoliaSearchClient } from '$lib/algolia.js';
+	import SEO from '$lib/components/SEO.svelte';
 	import type { SpeciesRecord } from '$lib/models/ebird.js';
 
 	export let data;
@@ -14,10 +15,7 @@
 	}
 </script>
 
-<svelte:head>
-	<title>Results for "{results.query}" | Feather Finder</title>
-	<meta name="description" content={`Results for "${results.query}"`} />
-</svelte:head>
+<SEO title={`Results for "${results.query}"`} description={`Results for "${results.query}"`} />
 
 <div class="px-4 w-full">
 	<div class="flex flex-row justify-between items-baseline">
