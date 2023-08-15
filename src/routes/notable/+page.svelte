@@ -1,12 +1,14 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import SEO from '$lib/components/SEO.svelte';
 	import NotableSpeciesMap from '$lib/components/maps/NotableSpeciesMap.svelte';
-</script>
+	import { updateSEOData } from '$lib/stores/seo.store';
 
-<svelte:head>
-	<SEO title="Nearby Notable Species" description="Notable species observations near you" />
-</svelte:head>
+	updateSEOData({
+		title: `Nearby Notable Species`,
+		description: `Notable species observations near you`,
+		url: $page.url.toString()
+	});
+</script>
 
 <div class="flex flex-col w-full items-stretch justify-start relative">
 	<div class="p-4">

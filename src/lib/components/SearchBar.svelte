@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { AlgoliaSearchClient } from '$lib/algolia';
+	import { logEvent } from '$lib/firebase';
 	import { createEventDispatcher } from 'svelte';
 	import { writable } from 'svelte/store';
 	import * as _ from 'underscore';
@@ -44,6 +45,7 @@
 		showResults.set(false);
 		if ($queryID) {
 			AlgoliaSearchClient.objectClickedInSearchResults($queryID, speciesCode, position);
+			logEvent('species_selected', { speciesCode });
 		}
 		goto(`/species/${speciesCode}`);
 	}

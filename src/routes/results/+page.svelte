@@ -1,23 +1,30 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
+	import { page } from '$app/stores';
 	import { AlgoliaSearchClient } from '$lib/algolia.js';
-	import SEO from '$lib/components/SEO.svelte';
+	import { logEvent } from '$lib/firebase.js';
 	import type { SpeciesRecord } from '$lib/models/ebird.js';
+	import { updateSEOData } from '$lib/stores/seo.store.js';
 
 	export let data;
 	$: ({ results } = data);
 	$: queryID = results.queryID;
 
+	$: if (results) {
+		updateSEOData({
+			title: `Results for "${results.query}"`,
+			description: `Results for "${results.query}"`,
+			url: $page.url.toString()
+		});
+	}
+
 	function handleSelection(record: SpeciesRecord, position: number) {
 		if (!queryID) return;
 		AlgoliaSearchClient.objectClickedAfterSearch(queryID, record.speciesCode, position);
+		logEvent('species_selected', { speciesCode: record.speciesCode });
 		goto(`/species/${record.speciesCode}`);
 	}
 </script>
-
-<svelte:head>
-	<SEO title={`Results for "${results.query}"`} description={`Results for "${results.query}"`} />
-</svelte:head>
 
 <div class="px-4 w-full">
 	<div class="flex flex-row justify-between items-baseline">
