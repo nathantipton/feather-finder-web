@@ -29,7 +29,9 @@
 	];
 </script>
 
-<SEO title="Home" />
+<svelte:head>
+	<SEO title="Home" />
+</svelte:head>
 
 <div class="flex flex-col relative w-full">
 	<div class="h-96 relative">

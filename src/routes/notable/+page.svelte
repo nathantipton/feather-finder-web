@@ -3,7 +3,9 @@
 	import NotableSpeciesMap from '$lib/components/maps/NotableSpeciesMap.svelte';
 </script>
 
-<SEO title="Nearby Notable Species" description="Notable species observations near you" />
+<svelte:head>
+	<SEO title="Nearby Notable Species" description="Notable species observations near you" />
+</svelte:head>
 
 <div class="flex flex-col w-full items-stretch justify-start relative">
 	<div class="p-4">

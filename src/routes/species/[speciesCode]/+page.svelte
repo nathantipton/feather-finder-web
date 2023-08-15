@@ -10,10 +10,12 @@
 	$: console.log('page', speciesCode);
 </script>
 
-<SEO
-	title={speciesDetails.comName}
-	description={`Check out this map of ${speciesDetails.comName} sightings!`}
-/>
+<svelte:head>
+	<SEO
+		title={speciesDetails.comName}
+		description={`Check out this map of ${speciesDetails.comName} sightings!`}
+	/>
+</svelte:head>
 
 <div class="flex flex-col w-full items-stretch justify-start">
 	<div

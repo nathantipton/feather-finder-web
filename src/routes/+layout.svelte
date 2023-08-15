@@ -11,7 +11,9 @@
 	}
 </script>
 
-<SEO />
+<svelte:head>
+	<SEO />
+</svelte:head>
 
 <!-- Main -->
 <div class="min-h-screen-safe flex flex-col justify-start items-stretch">

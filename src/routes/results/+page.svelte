@@ -15,7 +15,9 @@
 	}
 </script>
 
-<SEO title={`Results for "${results.query}"`} description={`Results for "${results.query}"`} />
+<svelte:head>
+	<SEO title={`Results for "${results.query}"`} description={`Results for "${results.query}"`} />
+</svelte:head>
 
 <div class="px-4 w-full">
 	<div class="flex flex-row justify-between items-baseline">
