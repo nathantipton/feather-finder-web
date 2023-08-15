@@ -1,11 +1,9 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { page } from '$app/stores';
 	import { AlgoliaSearchClient } from '$lib/algolia.js';
 	import SEO from '$lib/components/SEO.svelte';
 	import { logEvent } from '$lib/firebase.js';
 	import type { SpeciesRecord } from '$lib/models/ebird.js';
-	import { updateSEOData } from '$lib/stores/seo.store.js';
 
 	export let data;
 	$: ({ results } = data);

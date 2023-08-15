@@ -6,7 +6,6 @@
 	import { colorSchemeWatcher } from '$lib/utilities/ui';
 	import { onMount } from 'svelte';
 	import { logEvent } from '$lib/firebase';
-	import { seoData } from '$lib/stores/seo.store';
 
 	if (browser) {
 		colorSchemeWatcher();
