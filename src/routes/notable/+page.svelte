@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { page } from '$app/stores';
 	import SEO from '$lib/components/SEO.svelte';
 	import NotableSpeciesMap from '$lib/components/maps/NotableSpeciesMap.svelte';
 </script>

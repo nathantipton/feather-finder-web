@@ -1,8 +1,10 @@
 <script lang="ts">
+	import { page } from '$app/stores';
+
 	export let title = 'Feather Finder: Discover Birds Nearby';
 	export let description =
 		'Explore and identify species of birds that have been spotted in your vicinity. Join the Feather Finder community today!';
-	export let url = 'https://feather-finder.com';
+	export let url = $page.url.toString() ?? 'https://feather-finder.com';
 	export let image = '/og_image_banner.png'; // Optional: for OpenGraph and Twitter card images
 </script>
 
