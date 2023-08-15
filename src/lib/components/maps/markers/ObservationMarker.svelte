@@ -15,7 +15,6 @@
 	let marker: mapboxgl.Marker | null = null;
 
 	async function handleShareButtonClick() {
-		console.log('shared', observation);
 		try {
 			await navigator.share({
 				title: `Check out this ${observation.comName}`,

@@ -6,8 +6,6 @@
 
 	$: ({ speciesDetails } = data);
 	$: ({ speciesCode } = $page.params);
-
-	$: console.log('page', speciesCode);
 </script>
 
 <svelte:head>
